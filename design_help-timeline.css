@@ -73,3 +73,8 @@ li strong, h1,h2,h3{ color:#AD5600;}
 textarea{
 width:600px; height:150px; display:block; 	background: #000;
 	color: #fff;}
+
+.debugland{
+    background: #defede;
+    padding-left: 10%;
+}

@@ -1,40 +1,48 @@
-	<?php 
-	class timeline{
-	var $return ='';
-	var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
-	
-		public function build($array, $order="asc"){
-			$tabstamps = array();
-		$return ='';
-			foreach ($array as $k => $v) {
-				$boom = explode("/", $k);
-				$stamp = mktime(0,0,0,$boom[1],$boom[0],$boom[2]);
-				if(!isset($tabstamps[$stamp])){$tabstamps[$stamp] ='';}
-				$tabstamps[$stamp] = $v;
-			}
-			if($order="asc"){
-				ksort($tabstamps);
-			}
-			elseif($order="desc"){
-				krsort($tabstamps);
-			}
-						foreach ($tabstamps as $k => $v) {
-			$return .='<div class="box-bulle">
-						<div class="pik"></div>
-						<div class="bulle">
-							<div class="date">'.date('d/m/Y',$k).' '.$this->ecart(date('d/m/Y',$k)).'</div>
-						<div class="bulle_text">'.$v.'</div>
-						</div>
-				</div>';	
-			}
-					
-					
-			$this->$return = $return;
-			return $this->$return;
-		
-		}
-		
+<?php 
+class timeline{
+var $return ='';
+var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
+
+    public function build($array, $order="asc"){
+        $tabstamps = array();
+        $return ='';
+            foreach ($array as $k => $v) {
+                    $boom = explode("/", $k);
+                    $stamp = mktime(0,0,0,$boom[1],$boom[0],$boom[2]);
+                    if(!isset($tabstamps[$stamp])){$tabstamps[$stamp] ='';}
+                    $tabstamps[$stamp] = $v;
+            }
+            if($order="asc"){
+                    ksort($tabstamps);
+            }
+            elseif($order="desc"){
+                    krsort($tabstamps);
+            }
+            foreach ($tabstamps as $k => $v) {
+            $return .='<div class="box-bulle">
+                                    <div class="pik"></div>
+                                    <div class="bulle">
+                                        <div class="date">'.date('d/m/Y',$k).' '.$this->ecart(date('d/m/Y',$k)).'</div>
+                                    <div class="bulle_text">'.$v.'</div>
+                                    </div>
+                      </div>';	
+            }
+            $this->$return = $return;
+            return $this->$return;
+
+    }
+ /**
+  * 
+  * @param type $array
+  * @param type $order
+  * @param type $taille_frise
+  * @param type $op
+  * @return type
+  */
 public function frise($array, $order="asc", $taille_frise=1000, $op=0){
+    
+    print_r($array).print('<hr/>');
+    
 	//analyse de la durée
 
 	$debug = $rendu_simple = $decalage_debut =$classe_spe =$return = $pixels = $pixlarge = $stamp_fin = $stamp = '';
@@ -53,75 +61,153 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
 	'11'=>'30',
 	'12'=>'31',
 	);
-				foreach ($array as $k => $v) {
-				$debut_negatif = 0;	
-				$fin_negatif = 0;
-				$stamp = '';
-				$stamp_fin =  '';
-				
-				$debug .="<br/>K $k";
-				
-					//test si une durée de deux dates séparées par des virgules est donnée
-					if(strstr($k,',')){
-						//cas d'une durée
-					
-						$boom = explode(",", $k);
-						$tab_debut = explode("/", $boom[0]);
-						$tab_fin = explode("/", $boom[1]);
-						$stamp = mktime(0,0,0,$tab_debut[1],$tab_debut[0],$tab_debut[2]);
-					
-						$stamp_fin = mktime(0,0,0,$tab_fin[1],$tab_fin[0],$tab_fin[2]);
-						
-							//test d'une date avant l'époque unix
-							if($tab_debut[2]<1970){
-							$debut_negatif = 1;
-							//donner un timestamp selon le nombre de jours, mois années.
-							$stamp =((($tab_debut[0])*24*3600)+(($tab_debut[1])*$jours_dans_mois[$tab_debut[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;				
-						//	$debug .="<br/>$k étendue -unix $stamp,$stamp_fin sta dire ".date('Y/m/d', $stamp).' à '.date('Y/m/d', $stamp_fin);
-							}
-							if($tab_fin[2]<1970){
-							$stamp_fin =((($tab_fin[0])*24*3600)+(($tab_fin[1])*$jours_dans_mois[$tab_fin[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;
-						//	$debug .="<br/> $k étendue -unix $stamp $stamp_fin , sta dire ".date('Y/m/d', $stamp);
-							$fin_negatif = 1;
-							}
-							
-			
-							$stamp_compare = $stamp;
-							$stamp_c_fin = $stamp_fin;
-							if($stamp <0){$stamp_compare = - $stamp;}
-							if($stamp_fin <0){$stamp_c_fin = - $stamp_fin;}
-							
-							$duree_evenement = $stamp_c_fin - $stamp_compare;
-	//		$debug .="<br/> $duree_evenement = $stamp_c_fin - $stamp_compare";
-					//	if(!isset($tabdurees[$k])){$tabdurees[$k] ='';}
-						$tabdurees[$k]= $duree_evenement;
-						
-					//	if(!isset($tabdebuts[$k])){$tabdebuts[$k] ='';}
-						$tabdebuts[$k]= $stamp;
-						$tab_start_dure[$stamp]= $duree_evenement;
-		$debug .="<br/>K ajoute $tabdurees[$k]= $duree_evenement <br/>$v dans tabdebuts[$k] = $stamp <br/>  tab_start_dure[$stamp]= $duree_evenement";
-					}
-					elseif(strstr($k,'/')){
-						$boom = explode("/", $k);
-						$stamp = mktime(0,0,0,$boom[1],$boom[0],$boom[2]);
-						//test d'une date avant l'époque unix
-							if($boom[2]<1970){
-						//	$debug .="<br/> $boom[0] / $boom[1] / $boom[2] date ponctuelle avant époque unix $stamp";
-							$debut_negatif = 1;	
-							}
-					}
-					else{
-					die( " $k est un mauvais format de date. Veuillez entrer des dates tel que JJ/MM/AAAA ou bien JJ/MM/AAAA,JJ/MM/AAAA poru les durées");
-					}
-	//		echo "<br/>$k stamp $stamp ";
-	//	if(!isset($tabstamps[$stamp])){$tabstamps[$stamp] ='';}
-		$tabstamps[$stamp] = $v;
-		$tabstampsk[] = $stamp;
-	
-	//	echo "<br/>$k $stamp ,";
-	//	print_r($tabstampsk);
-	}  //fin de l'examen du tableau
-	
+        //définir les jours entre la date la plus ancienne et la plus récente
+        
+       $t_dates = array();
+        
+        foreach ($array as $k => $v) {
+        $debut_negatif = 0;	
+        $fin_negatif = 0;
+        $stamp = '';
+        $stamp_fin =  '';
+
+        $debug .="<br/>K $k";
+
+                //test si une durée de deux dates séparées par des virgules est donnée
+                if(strstr($k,',')){
+                        //cas d'une durée
+
+                        $boom = explode(",", $k);
+                        
+                        
+                        $tab_debut = explode("/", $boom[0]);
+                        $tab_debut = explode("-", $boom[0]);
+                        $tab_fin = explode("/", $boom[1]);
+                        $tab_fin = explode("-", $boom[1]);
+                        $stamp = mktime(0,0,0,$tab_debut[1],$tab_debut[0],$tab_debut[2]);
+                        $stamp_fin = mktime(0,0,0,$tab_fin[1],$tab_fin[0],$tab_fin[2]);
+                            $t_dates[max($tab_debut)] = $k ;
+                            $t_dates[max($tab_fin)] = $k ;
+                                //test d'une date avant l'époque unix
+                                if($tab_debut[2]<1970){
+                                $debut_negatif = 1;
+                                //donner un timestamp selon le nombre de jours, mois années.
+                                $stamp =((($tab_debut[0])*24*3600)+(($tab_debut[1])*$jours_dans_mois[$tab_debut[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;				
+                        //	$debug .="<br/>$k étendue -unix $stamp,$stamp_fin sta dire ".date('Y/m/d', $stamp).' à '.date('Y/m/d', $stamp_fin);
+                                }
+                                if($tab_fin[2]<1970){
+                                $stamp_fin =((($tab_fin[0])*24*3600)+(($tab_fin[1])*$jours_dans_mois[$tab_fin[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;
+                        //	$debug .="<br/> $k étendue -unix $stamp $stamp_fin , sta dire ".date('Y/m/d', $stamp);
+                                $fin_negatif = 1;
+                                }
+
+
+                                $stamp_compare = $stamp;
+                                $stamp_c_fin = $stamp_fin;
+                                if($stamp <0){$stamp_compare = - $stamp;}
+                                if($stamp_fin <0){$stamp_c_fin = - $stamp_fin;}
+
+                                $duree_evenement = $stamp_c_fin - $stamp_compare;
+                        $debug .="<br/> $duree_evenement = $stamp_c_fin - $stamp_compare";
+                //	if(!isset($tabdurees[$k])){$tabdurees[$k] ='';}
+                        $tabdurees[$k]= $duree_evenement;
+
+                //	if(!isset($tabdebuts[$k])){$tabdebuts[$k] ='';}
+                        $tabdebuts[$k]= $stamp;
+                        $tab_start_dure[$stamp]= $duree_evenement;
+                        $debug .="<br/>K ajoute $tabdurees[$k]= $duree_evenement <br/>$v dans tabdebuts[$k] = $stamp <br/>  tab_start_dure[$stamp]= $duree_evenement";
+                }
+                elseif(strstr($k,'/') OR strstr($k,'-')){
+                        $boom = explode("/", $k);
+                        $boom = explode("-", $k);
+                        $stamp = mktime(0,0,0,$boom[1],$boom[0],$boom[2]);
+                        
+                        $t_dates[max($boom)] = $k ;
+                      
+                                if($boom[2]<1970){  //test d'une date avant l'époque unix
+                          	$debug .="<br/> $boom[0] / $boom[1] / $boom[2] date ponctuelle avant époque unix $stamp";
+                                $debut_negatif = 1;	
+                                }
+                }
+                else{
+                die( "<div class='info'> $k est un mauvais format de date. Veuillez entrer des dates tel que JJ/MM/AAAA ou bien JJ/MM/AAAA,JJ/MM/AAAA pour les durées</div>");
+                }
+//		echo "<br/>$k stamp $stamp ";
+//	if(!isset($tabstamps[$stamp])){$tabstamps[$stamp] ='';}
+$tabstamps[$stamp] = $v;
+$tabstampsk[] = $stamp;
+
+//	echo "<br/>$k $stamp ,";
+//	print_r($tabstampsk);
+}  //fin de l'examen du tableau
+
+    // définir l'écart de date maximum
+    //  si une seule année : 365 j
+
+    $largeur = 365; // jours
+    $annees = ( max($t_dates) - min($t_dates) );
+    $largeur =  $annees * 365; // jours
+    $conversions = array();
+    $GLOBALS['t_dates'] =   $t_dates;
+    function convert($string_date){
+        
+        $ajout = 0;
+        $jours_dans_mois = array( 
+	'01'=>'31',
+	'02'=>'28',
+	'03'=>'31',
+	'04'=>'30',
+	'05'=>'31',
+	'06'=>'30',
+	'07'=>'31',
+	'08'=>'31',
+	'09'=>'30',
+	'10'=>'31',
+	'11'=>'30',
+	'12'=>'31',
+	);
+        
+        $boom = explode('-', $string_date);
+        $delta_annees =  ( max($boom) - min($GLOBALS['t_dates']) );
+            //conversion des dates en partie d'année
+            //ajouter le nombre de jours depuis le début de l'année en cours
+            $premier_tour = 1;
+                 for( $mois = $boom[1] ; $mois > 0; $mois-- ){ //ajouter tous les jours du mois pour tous les mois jusqu'a janvier
+                     if( $premier_tour == 1){
+                          $ajout += $mois; // ajout des jours de la date courante
+                     }
+                     $premier_tour = 0;
+                     $ajout += $jours_dans_mois[$boom[1]] + $delta_annees * 365 ;
+            }
+            echo '<hr/>$ajout '.$ajout;
+        return $ajout;
+    }
+    foreach ($array as $k => $v) {
+        $ajout = 0;
+        $boom = explode("-", $k);
+        
+        if(strstr($k,',')){
+            $dates_duree = explode(",", $k);
+            //TODO : jours depuis début pour les durées
+            $conversions[convert($dates_duree[0])]['content'] = $v ;
+            $conversions[convert($dates_duree[0])]['end'] = convert($dates_duree[1]) ;
+        }
+        else{
+            $conversions[convert($k)]['content'] = $v ; // clé[jours_depuis_debut]
+        }    
+        
+       
+       
+    }
+                        
+                            
+  
+    $debug .= "<br/>largeur de jours $largeur";
+    ksort($t_dates);
+    ksort($conversions);
+    $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
+
+
 	if($order=="asc"){
 		ksort($tabstamps);
 	}
@@ -346,7 +432,9 @@ foreach ($boxes as $keybox => $valuebox) {
 	";
 	
 	}
-	return $this->$return;
+	
+        $debug = '<fieldset class="debugland">'.$debug.'</fieldset>';
+        return $this->$return.$debug;
 
 }
 		/**

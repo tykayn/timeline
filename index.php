@@ -11,9 +11,9 @@ and open the template in the editor.
 		<link rel="shortcut icon" type="x-icon/png" href="icon.png" />
     </head>
     <body>
-		<?php
-		error_reporting(E_ERROR | E_WARNING | E_PARSE);
-		?>
+    <?php
+    error_reporting(E_ERROR | E_WARNING | E_PARSE);
+    ?>
 		<div class="top">
 		<img src="icon.png" alt="icone"/>
 		<a href="http://artlemoine.com"><img alt="favicon " src="http://artlemoine.com/decoration/templates/flowhtml5/favicon.png"/> Portfolio de Baptiste Lemoine</a>
