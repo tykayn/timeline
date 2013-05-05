@@ -41,7 +41,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
   */
 public function frise($array, $order="asc", $taille_frise=1000, $op=0){
     
-    print_r($array).print('<hr/>');
+ //   print_r($array).print('<hr/>');
     
 	//analyse de la durée
 
@@ -71,7 +71,7 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
         $stamp = '';
         $stamp_fin =  '';
 
-        $debug .="<br/>K $k";
+    //    $debug .="<br/>K $k";
 
                 //test si une durée de deux dates séparées par des virgules est donnée
                 if(strstr($k,',')){
@@ -115,17 +115,17 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
                 //	if(!isset($tabdebuts[$k])){$tabdebuts[$k] ='';}
                         $tabdebuts[$k]= $stamp;
                         $tab_start_dure[$stamp]= $duree_evenement;
-                        $debug .="<br/>K ajoute $tabdurees[$k]= $duree_evenement <br/>$v dans tabdebuts[$k] = $stamp <br/>  tab_start_dure[$stamp]= $duree_evenement";
+                 //       $debug .="<br/>K ajoute $tabdurees[$k]= $duree_evenement <br/>$v dans tabdebuts[$k] = $stamp <br/>  tab_start_dure[$stamp]= $duree_evenement";
                 }
                 elseif(strstr($k,'/') OR strstr($k,'-')){
-                        $boom = explode("/", $k);
+                        // $boom = explode("/", $k);
                         $boom = explode("-", $k);
                         $stamp = mktime(0,0,0,$boom[1],$boom[0],$boom[2]);
                         
                         $t_dates[max($boom)] = $k ;
                       
                                 if($boom[2]<1970){  //test d'une date avant l'époque unix
-                          	$debug .="<br/> $boom[0] / $boom[1] / $boom[2] date ponctuelle avant époque unix $stamp";
+                          //	$debug .="<br/> $boom[0] / $boom[1] / $boom[2] date ponctuelle avant époque unix $stamp";
                                 $debut_negatif = 1;	
                                 }
                 }
@@ -145,12 +145,16 @@ $tabstampsk[] = $stamp;
     //  si une seule année : 365 j
 
     $largeur = 365; // jours
-    $annees = ( max($t_dates) - min($t_dates) );
+    $annees = ( max($t_dates) - min($t_dates) +1 );
     $largeur =  $annees * 365; // jours
     $conversions = array();
     $GLOBALS['t_dates'] =   $t_dates;
+    
     function convert($string_date){
-        
+       /**
+     * renvoie le nombre de jours depuis le premier jour de la frise
+     * @return \type
+     */ 
         $ajout = 0;
         $jours_dans_mois = array( 
 	'01'=>'31',
@@ -169,21 +173,27 @@ $tabstampsk[] = $stamp;
         
         $boom = explode('-', $string_date);
         $delta_annees =  ( max($boom) - min($GLOBALS['t_dates']) );
+        $delta_annees = $delta_annees * 365;
             //conversion des dates en partie d'année
             //ajouter le nombre de jours depuis le début de l'année en cours
             $premier_tour = 1;
-                 for( $mois = $boom[1] ; $mois > 0; $mois-- ){ //ajouter tous les jours du mois pour tous les mois jusqu'a janvier
+                 for( $mois = $boom[1] ; $mois > 0; $mois-- ){ //ajouter tous les jours du mois pour chaque mois jusqu'a janvier
                      if( $premier_tour == 1){
-                          $ajout += $mois; // ajout des jours de la date courante
+                          $ajout += $boom[2]; // ajout des jours de la date courante
                      }
                      $premier_tour = 0;
-                     $ajout += $jours_dans_mois[$boom[1]] + $delta_annees * 365 ;
-            }
-            echo '<hr/>$ajout '.$ajout;
+                     $ajout += $jours_dans_mois[$boom[1]]  ;
+                }
+                $ajout += $delta_annees;
         return $ajout;
     }
+    
+    
+    
+    
+    $tab_jours = Array();
     foreach ($array as $k => $v) {
-        $ajout = 0;
+       // $ajout = 0;
         $boom = explode("-", $k);
         
         if(strstr($k,',')){
@@ -191,9 +201,13 @@ $tabstampsk[] = $stamp;
             //TODO : jours depuis début pour les durées
             $conversions[convert($dates_duree[0])]['content'] = $v ;
             $conversions[convert($dates_duree[0])]['end'] = convert($dates_duree[1]) ;
+            $conversions[convert($dates_duree[0])]['date'] = $k ;
+            
         }
         else{
             $conversions[convert($k)]['content'] = $v ; // clé[jours_depuis_debut]
+            $tab_jours[] = convert($k);
+            $conversions[convert($k)]['date'] = $k ;
         }    
         
        
@@ -203,11 +217,38 @@ $tabstampsk[] = $stamp;
                             
   
     $debug .= "<br/>largeur de jours $largeur";
-    ksort($t_dates);
+   ksort($t_dates);
     ksort($conversions);
-    $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
-
-
+    
+    $jour_max  = max($tab_jours);
+    $frisewidth = 800;
+    $frisecontent = "";
+    function displaybloc($arr_bloc , $px){
+        return ' <div class="timelinebloc box-frise" style=" left: '. $px .'px; position : absolute;">
+                     <div class="timeline_head">'.$arr_bloc['date'].'</div>
+                '.$arr_bloc['content'].'
+                </div>';
+    }
+    
+    // ranger les évènements dans des lignes
+        // selon largeur de temps et écart par rapport au début, définir le nombre de px a mettre sur la gauche
+        foreach ($conversions as $k => $v) {
+            
+            $pxbloc = round( $k * $frisewidth / $largeur , 0) ; //proportion de pixels selon le jour du bloc
+            $conversions[$k]['pxleft'] = $pxbloc;
+            $frisecontent .= displaybloc($v , $pxbloc);
+         //   $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
+        }
+    // placement et affichage
+        // savoir si des évènements se superposent
+    
+  //  $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
+    $this->return = '<div class="timeline-tk">'.$frisecontent.'</div>'
+         //   .$debug
+            ;
+    echo  $this->return ;
+    
+/*
 	if($order=="asc"){
 		ksort($tabstamps);
 	}
@@ -435,8 +476,13 @@ foreach ($boxes as $keybox => $valuebox) {
 	
         $debug = '<fieldset class="debugland">'.$debug.'</fieldset>';
         return $this->$return.$debug;
-
+*/
+    
+    
+    
 }
+/**** fin de frise ****/
+
 		/**
 		 *
 		 * @param type $date
@@ -451,7 +497,7 @@ foreach ($boxes as $keybox => $valuebox) {
 		/**
 		 *
 		 * @param type $date
-		 * @return donne le nombre de jours entre deux dates
+		 * @return donne le nombre de jours entre deux dates JJ/MM/AAAA
 		 */
 		public function entre_deux($date_start , $date_end){
 				
@@ -504,216 +550,5 @@ foreach ($boxes as $keybox => $valuebox) {
 		 *
 		 * @return donne le style pour les frises chronologiques
 		 */
-		public function css(){
-			return'<style type="text/css">
- body{
-font-family: calibri,arial; 
-
-} 
-.timeline-tk_op{
-
-    border: 1px solid #CCCCCC;
-color: #222;
-padding:5px;
- /* position:absolute; */
-    overflow: hidden;
-	min-height:400px;
-
-}
-.timeline-tk{
-
-    border: 1px solid #CCCCCC;
-color: #222;
-padding:5px;
-position:relative;
-overflow: hidden;
-}
-.box-frise{
-	background: #fff;
-	padding:5px 0;
-	/*    border: 1px solid orange; */
-}
-.box-frise_op{
-    background: none repeat scroll 0 0 #FFFFFF;
-	border: 1px solid red;
-    margin-bottom: 0;
-    min-height: 140px;
-    padding: 5px 0;
-    position: relative;
-    top: 20px;
-}
-.empreintes{
-    display: block;
-    height: 1600px;
-    margin-left: -6px;
-    overflow: hidden;
-    position: absolute;
-    top: 25px;
-    width: 100%;
-    z-index: 0;
-
-}
-.empreinte{ 
-	border: 1px solid #ccc;
-    display: block;
-    height: 1600px;
-    margin-left: 6px;
-   top:0;
-    overflow: hidden;
-    position: absolute;
-    width: 100%;
-    z-index: 0;
-	border: 1px solid #B5CEF2;
-	background: #EFEFEF;
-	background: rgba(239, 239, 239,0.5);
-	
-}
-.empreinte_today{ 
-	border: 1px solid #red;
-    display: block;
-    height: 1600px;
-    margin-left: 6px;
-   top:0;
-    overflow: hidden;
-    position: absolute;
-    z-index: 0;
-	border: 1px solid #blue;
-	background: orange;
-	
-}
-.date_fin{
-float:right;
-}
-.box-bulle{
-display: block;
-}
-.pik_vertical{
-    background-attachment: scroll;
-    background-color: transparent;
-    background-image: url("pik.png");
-    background-position: -50px 50%;
-    display: block;
-    height: 40px;
-    margin-bottom: -20px;
-    margin-left: 0;
-    position: relative;
-    width: 10px;
-    z-index: 1;
-}
-.pik{
-    background: none repeat scroll 0 0 #FFFFFF;
-    display: block;
-    height: 30px;
-    margin-bottom: -30px;
-    width: 30px;
-}
-.pik_fin{
-    background-position: 20px 50%;
-    margin-bottom: -22px;
-    margin-left: -7px;
-    width: 10px;
-}
-
-.precision{
-    color: #444444;
-    display: block;
-    font-size: small;
-    text-align: center;
-}
-.date{
-font-size: small;
-border-radius: 10px;
-background: #ccc;
-padding:1px 10px;
-}
-.bulle{
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
-	border-left: 2px solid #CCCCCC;
-    display: inline-block;
-	border-radius: 15px;
-	position:relative;
-	min-width: 200px;
-	    z-index: 1;
-		box-shadow: 0 0 10px #333;
-
-}
-.bulle_optimised{
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
-	border-left: 2px solid #CCCCCC;
-    display: inline-block;
-	border-radius: 15px;
-	position:absolute;
-	min-width: 200px;
-	    z-index: 1;
-		box-shadow: 0 0 10px #333;
-		top:0;
-
-}
-.bulle_optimised:hover{
-    background: #D1AFAF;
-    border: 1px solid #DD9D25;
-	border-left: 2px solid #DD9D25;
-    display: inline-block;
-	border-radius: 15px;
-}
-.bulle_optimised:hover .date{
-    background: #ddd;
-
-}
-.bulle:hover{
-    background: #D1AFAF;
-    border: 1px solid #DD9D25;
-	border-left: 2px solid #DD9D25;
-    display: inline-block;
-	border-radius: 15px;
-	position:relative;
-}
-.bulle:hover .date{
-    background: #ddd;
-
-}
-.bulle_text{
-	 word-wrap: break-word;
-    display: block;
-    padding: 10px;
-	width:200px;
-
-}
-
-.pre_bulle{
-    background: #cc0000;
-    display: block;
-    height: 8px;
-    position: absolute;
-    width: 3px;
-	margin-left:4px;
-
-}
-.marqueurs{
-display:block;
-height:10px;
-
-}
-a{
-text-decoration: none;
-color: #883b12;
-}
-a:hover{
-text-decoration: underline;
-color: #e66a27;
-}
-.duree{
-background:#AFE2FF !important;
-color:#234D66;
-max-width: 1000px;
-	
-}
-.duree:hover{
-background:orange !important;
-}
-        </style>';
-		}
 	}
 ?>
