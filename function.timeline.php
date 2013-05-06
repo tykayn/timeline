@@ -224,7 +224,13 @@ $tabstampsk[] = $stamp;
     $frisewidth = 800;
     $frisecontent = "";
     function displaybloc($arr_bloc , $px){
-        return ' <div class="timelinebloc box-frise" style=" left: '. $px .'px; position : absolute;">
+        $end ="";
+        $classe ="";
+        if( isset($arr_bloc['end'])){
+        $end ="width:". $px + 100 ."px;"; // TODO calculer
+        $classe ="periode";
+        }
+        return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px .'px; position : absolute; '.$end.'">
                      <div class="timeline_head">'.$arr_bloc['date'].'</div>
                 '.$arr_bloc['content'].'
                 </div>';

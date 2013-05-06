@@ -40,6 +40,7 @@
 		$tableau[$_GET['un']] =  $_GET['un_t'];
 		$tableau[$_GET['deux']] =  $_GET['deux_t'];
 		$tableau[$_GET['trois']] =  $_GET['trois_t'];
+                $tableau['1900-01-01,2000-01-02'] =  'une durée';
 
 
 $timeline = new timeline();
