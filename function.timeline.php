@@ -78,7 +78,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
         return $ajout;
       }  
      else{
-            var_dump($string_date);
+           var_dump($string_date);
         }
     }
     
@@ -88,15 +88,22 @@ function displaybloc($arr_bloc , $px=100){
     $classe ="";
     $diff = 1;
     if( isset($arr_bloc['end'])){
-        $diff = ceil( timeline::convert($arr_bloc['end']) - timeline::convert($arr_bloc['date'])) ;
-        $px= $diff / $GLOBALS['largeur'] ;//* $GLOBALS['taille_frise'];
-       // $diff = $px   ;
-        $end ="width:'". $px ."px'"; // TODO calculer
+        
+        $debut = explode(',' , $arr_bloc['date']);
+        $debut = timeline::convert($debut[0]);
+
+        $diff = ceil( $arr_bloc['end'] - $debut) ;
+                
+        $px= ceil($diff / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;//* $GLOBALS['taille_frise'];
+      $diff = '<pre>'. $diff .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
+        $end ="width:". $px ."px; "; // TODO calculer
         $classe ="periode";
+        echo '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
+        echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' = '. $px .' sur '. $GLOBALS['taille_frise'].' pixels. soit <hr/>' ;
     }
         
-    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px .'px; position : absolute; ">
-        <div class="timeline_period_line" '.$end.'></div>
+    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px .'px; position : absolute; '.$end.'" >
+        <div class="timeline_period_line" '.$end.'></div>'.$end.'
                  <div class="timeline_head">'.$arr_bloc['date'].'</div>
                  <div class="timeline_content">'.$diff.' jours de durée<br/>
             '.$arr_bloc['content'].'
@@ -259,13 +266,11 @@ $tabstampsk[] = $stamp;
          //   $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
         }
     // placement et affichage
-        // savoir si des évènements se superposent
+        // TODO savoir si des évènements se superposent
     
   //  $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
   //  $this->return = '<div class="timeline-tk">'.$frisecontent.'</div>'
          //   .$debug;
-            
- //  echo  $this->return ;
             return '<div class="timeline-tk">'.$frisecontent.'</div>';
 
 }
@@ -552,6 +557,7 @@ background:orange !important;
 }
 .timelinebloc{
     padding: 0px ;
+    background: fff7db;
 }
 .timeline_head{
     font-size: small;
@@ -562,6 +568,7 @@ background:orange !important;
 }
 .periode{
     border-top:5px solid;
+    border-bottom:5px solid;
 }
 .periode .timeline_period_line{
     display: inline-block;
