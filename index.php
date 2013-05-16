@@ -43,9 +43,9 @@ and open the template in the editor.
 	<br/>	"12/08/10" => "plus tard "
 	<br/>		);
 	<br/>		
-	<br/>	$timeline = new timeline();
-	<br/>	echo $timeline->frise($tableau, "asc",940);
-	<br/>	echo $timeline->css();
+	<br/>	timeline = new timeline();
+	<br/>	echo timeline::frise($tableau, "asc",940);
+	<br/>	echo timeline::css();
 			
 		</code>
 		(n'oubliez pas de faire les echo) <br/>
@@ -88,12 +88,10 @@ and open the template in the editor.
 		
 		7 milliards d'humains"
 			);
-			
-			$timeline = new timeline();
 			echo 
-			$timeline->frise($tableau, "asc",940).
-			$timeline->css().
-			'Ou encore comme ceci:'. $timeline->frise($tableau3, "asc",1000);
+			timeline::frise($tableau, "asc",940).
+			timeline::css().
+			'Ou encore comme ceci:'. timeline::frise($tableau3, "asc",1000);
 			
 			?>
 		<h2 id="tableau">Le tableau d'évènements</h2>
@@ -123,18 +121,18 @@ and open the template in the editor.
 		<h3> Exemples</h3>
 		
 		
-		<?php echo 'Aujourd\'hui : '.$timeline->datejour(date('d/m/Y')); ?>.<br/>
-		<code>echo 'Aujourd\'hui : '.$timeline->datejour(date('d/m/Y'));</code><br/>
+		<?php echo 'Aujourd\'hui : '.timeline::datejour(date('d/m/Y')); ?>.<br/>
+		<code>echo 'Aujourd\'hui : '.timeline::datejour(date('d/m/Y'));</code><br/>
 		
-		<?php echo 'Le jour de ma naissance était un '.$timeline->datejour('16/09/1987'); ?>.<br/>
-		<code>echo 'Le jour de ma naissance était un '.$timeline->datejour('16/09/1987');</code><br/>
+		<?php echo 'Le jour de ma naissance était un '.timeline::datejour('16/09/1987'); ?>.<br/>
+		<code>echo 'Le jour de ma naissance était un '.timeline::datejour('16/09/1987');</code><br/>
 		
 		
 		<?php echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .
-		$timeline->ecart('15/08/2009').
-		' et c\'était un '.$timeline->datejour('15/08/2009');
+		timeline::ecart('15/08/2009').
+		' et c\'était un '.timeline::datejour('15/08/2009');
 		?><br/>
-		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> $timeline->ecart('15/08/2009').<br/>' et c\'était un '.<br/>$timeline->datejour('15/08/2009');</code><br/><br/>
+		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> timeline::ecart('15/08/2009').<br/>' et c\'était un '.<br/>timeline::datejour('15/08/2009');</code><br/><br/>
 		
 		Et voici une frise pour visualiser ces données:
 		<?php
@@ -143,7 +141,7 @@ and open the template in the editor.
 		"15/08/2009,".date('d/m/Y') => "vie du portfolio",
 		date('d/m/Y') => "aujourd'hui"
 			);
-	echo $timeline->frise($tableau2, "asc",600);
+	echo timeline::frise($tableau2, "asc",600);
 	?>
 	Ce qui a été fait comme ceci:
 		<textarea>
@@ -152,7 +150,7 @@ and open the template in the editor.
 		"15/08/2009,".date('d/m/Y') => "vie du portfolio",<br/>
 		date('d/m/Y') => "aujourd'hui"<br/>
 			);<br/>
-	echo $timeline->frise($tableau2, "asc",600);
+	echo timeline::frise($tableau2, "asc",600);
 	</textarea>
 		<br/>
 		Et voilà, bonnes frises à vous.<br/>

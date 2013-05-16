@@ -60,7 +60,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
 	'11'=>'30',
 	'12'=>'31',
 	);
-      if(preg_match("/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/", $string_date)){
+      if(preg_match("/^\d{4}-\d{2}-\d{2}$/", $string_date)){ //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
           $boom = explode('-', $string_date);
         $delta_annees =  ( max($boom) - min($GLOBALS['t_dates']) );
         $delta_annees = $delta_annees * 365;
@@ -84,6 +84,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
     
 
 function displaybloc($arr_bloc , $px=100){
+    $px_left = $px;
     $end ="";
     $classe ="";
     $diff = 1;
@@ -92,22 +93,25 @@ function displaybloc($arr_bloc , $px=100){
         $debut = explode(',' , $arr_bloc['date']);
         $debut = timeline::convert($debut[0]);
 
-        $diff = ceil( $arr_bloc['end'] - $debut) ;
+        $diff_j = ceil( $arr_bloc['end'] - $debut) ;
                 
-        $px= ceil($diff / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;//* $GLOBALS['taille_frise'];
-      $diff = '<pre>'. $diff .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
+        $px= ceil($diff_j / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;//* $GLOBALS['taille_frise'];
+      $diff = '<pre>'. $diff_j  .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
         $end ="width:". $px ."px; "; // TODO calculer
         $classe ="periode";
-        echo '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
-        echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' = '. $px .' sur '. $GLOBALS['taille_frise'].' pixels. soit <hr/>' ;
+        // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
+        // echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
     }
         
-    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px .'px; position : absolute; '.$end.'" >
-        <div class="timeline_period_line" '.$end.'></div>'.$end.'
-                 <div class="timeline_head">'.$arr_bloc['date'].'</div>
-                 <div class="timeline_content">'.$diff.' jours de durée<br/>
-            '.$arr_bloc['content'].'
-                </div>
+    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
+                 <div class="timeline_period_line" style="'.$end.'">
+                 </div>
+                 <div class="timeline_head">
+                    '.$arr_bloc['date'].'
+                 </div>
+                 <div class="timeline_content">
+                     '.$arr_bloc['content'].'
+                 </div>
             </div>';
 }
     
@@ -557,9 +561,10 @@ background:orange !important;
 }
 .timelinebloc{
     padding: 0px ;
-    background: fff7db;
+    background: #fff7db;
 }
 .timeline_head{
+    padding: 5px 10px ;
     font-size: small;
     background: #ccc;
 }
