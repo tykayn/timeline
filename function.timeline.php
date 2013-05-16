@@ -60,8 +60,8 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
 	'11'=>'30',
 	'12'=>'31',
 	);
-        
-        $boom = explode('-', $string_date);
+      if(preg_match("/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/", $string_date)){
+          $boom = explode('-', $string_date);
         $delta_annees =  ( max($boom) - min($GLOBALS['t_dates']) );
         $delta_annees = $delta_annees * 365;
             //conversion des dates en partie d'année
@@ -76,19 +76,27 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
                 }
                 $ajout += $delta_annees;
         return $ajout;
+      }  
+     else{
+            var_dump($string_date);
+        }
     }
+    
 
-function displaybloc($arr_bloc , $px){
+function displaybloc($arr_bloc , $px=100){
     $end ="";
     $classe ="";
     $diff = 1;
     if( isset($arr_bloc['end'])){
-        $diff = ceil(($arr_bloc['end'] - $arr_bloc['date']) / $GLOBALS['taille_frise'] * $GLOBALS['largeur'] );
-        $end ="width:". $px + 100 ."px;"; // TODO calculer
+        $diff = ceil( timeline::convert($arr_bloc['end']) - timeline::convert($arr_bloc['date'])) ;
+        $px= $diff / $GLOBALS['largeur'] ;//* $GLOBALS['taille_frise'];
+       // $diff = $px   ;
+        $end ="width:'". $px ."px'"; // TODO calculer
         $classe ="periode";
     }
         
-    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px .'px; position : absolute; '.$end.'">
+    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px .'px; position : absolute; ">
+        <div class="timeline_period_line" '.$end.'></div>
                  <div class="timeline_head">'.$arr_bloc['date'].'</div>
                  <div class="timeline_content">'.$diff.' jours de durée<br/>
             '.$arr_bloc['content'].'
@@ -554,6 +562,12 @@ background:orange !important;
 }
 .periode{
     border-top:5px solid;
+}
+.periode .timeline_period_line{
+    display: inline-block;
+    height:2px;
+    min-width:1px;
+    background: blue;
 }
         </style>';
 		}
