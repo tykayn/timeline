@@ -1,0 +1,222 @@
+body{
+    font-family: calibri,arial; 
+} 
+.timeline-tk_op{
+    border: 1px solid #CCCCCC;
+    color: #222;
+    padding:5px;
+    /* position:absolute; */
+    overflow: hidden;
+    min-height:400px;
+}
+.timeline-tk{
+    border: 1px solid #CCCCCC;
+    color: #222;
+    padding:5px;
+    position:relative;
+    overflow: hidden;
+    min-height: 250px;
+    display: block;
+}
+.timeline-tk{
+    background: #fff;
+    padding:5px 0;
+    border: 1px solid orange; 
+    display: block;
+}
+.box-frise_op{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid red;
+    margin-bottom: 0;
+    min-height: 140px;
+    padding: 5px 0;
+    position: relative;
+    top: 20px;
+}
+.empreintes{
+    display: block;
+    height: 1600px;
+    margin-left: -6px;
+    overflow: hidden;
+    position: absolute;
+    top: 25px;
+    width: 100%;
+    z-index: 0;
+}
+.empreinte{ 
+    border: 1px solid #ccc;
+    display: block;
+    height: 1600px;
+    margin-left: 6px;
+    top:0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    border: 1px solid #B5CEF2;
+    background: #EFEFEF;
+    background: rgba(239, 239, 239,0.5);
+}
+.empreinte_today{ 
+    border: 1px solid #red;
+    display: block;
+    height: 1600px;
+    margin-left: 6px;
+    top:0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 0;
+    border: 1px solid #blue;
+    background: orange;
+}
+.date_fin{
+    float:right;
+}
+.box-bulle{
+    display: block;
+}
+.pik_vertical{
+    background-attachment: scroll;
+    background-color: transparent;
+    background-image: url("pik.png");
+    background-position: -50px 50%;
+    display: block;
+    height: 40px;
+    margin-bottom: -20px;
+    margin-left: 0;
+    position: relative;
+    width: 10px;
+    z-index: 1;
+}
+.pik{
+    background: none repeat scroll 0 0 #FFFFFF;
+    display: block;
+    height: 30px;
+    margin-bottom: -30px;
+    width: 30px;
+}
+.pik_fin{
+    background-position: 20px 50%;
+    margin-bottom: -22px;
+    margin-left: -7px;
+    width: 10px;
+}
+
+.precision{
+    color: #444444;
+    display: block;
+    font-size: small;
+    text-align: center;
+}
+.date{
+    font-size: small;
+    border-radius: 10px;
+    background: #ccc;
+    padding:1px 10px;
+}
+.bulle{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-left: 2px solid #CCCCCC;
+    display: inline-block;
+    border-radius: 15px;
+    position:relative;
+    min-width: 200px;
+    z-index: 1;
+    box-shadow: 0 0 10px #333;
+}
+.bulle_optimised{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-left: 2px solid #CCCCCC;
+    display: inline-block;
+    border-radius: 15px;
+    position:absolute;
+    min-width: 200px;
+    z-index: 1;
+    box-shadow: 0 0 10px #333;
+    top:0;
+}
+.bulle_optimised:hover{
+    background: #D1AFAF;
+    border: 1px solid #DD9D25;
+    border-left: 2px solid #DD9D25;
+    display: inline-block;
+    border-radius: 15px;
+}
+.bulle_optimised:hover .date{
+    background: #ddd;
+
+}
+.bulle:hover{
+    background: #D1AFAF;
+    border: 1px solid #DD9D25;
+    border-left: 2px solid #DD9D25;
+    display: inline-block;
+    border-radius: 15px;
+    position:relative;
+}
+.bulle:hover .date{
+    background: #ddd;
+
+}
+.bulle_text{
+    word-wrap: break-word;
+    display: block;
+    padding: 10px;
+    width:200px;
+
+}
+
+.pre_bulle{
+    background: #cc0000;
+    display: block;
+    height: 8px;
+    position: absolute;
+    width: 3px;
+    margin-left:4px;
+
+}
+.marqueurs{
+    display:block;
+    height:10px;
+
+}
+a{
+    text-decoration: none;
+    color: #883b12;
+}
+a:hover{
+    text-decoration: underline;
+    color: #e66a27;
+}
+.duree{
+    background:#AFE2FF !important;
+    color:#234D66;
+    max-width: 1000px;
+}
+.duree:hover{
+    background:orange !important;
+}
+.timelinebloc{
+    padding: 0px ;
+    background: #fff7db;
+}
+.timeline_head{
+    padding: 5px 10px ;
+    font-size: small;
+    background: #ccc;
+}
+.timeline_content{
+    padding: 5px 10px;
+}
+.periode{
+    border-top:5px solid;
+    border-bottom:5px solid;
+}
+.periode .timeline_period_line{
+    display: inline-block;
+    height:2px;
+    min-width:1px;
+    background: blue;
+}

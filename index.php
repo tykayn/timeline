@@ -12,7 +12,8 @@ and open the template in the editor.
     </head>
     <body>
     <?php
-    error_reporting(E_ERROR | E_WARNING | E_PARSE);
+    error_reporting(E_ALL);
+    date_default_timezone_set("GMT+1");
     ?>
 		<div class="top">
 		<img src="icon.png" alt="icone"/>

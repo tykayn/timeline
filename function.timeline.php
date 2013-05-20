@@ -581,8 +581,7 @@ background:orange !important;
     min-width:1px;
     background: blue;
 }
-        </style>';
+</style>';
 		}
-                
 }
 ?>
