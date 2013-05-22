@@ -201,6 +201,19 @@ a:hover{
 .timelinebloc{
     padding: 0px ;
     background: #fff7db;
+    background: rgba(150,120,200,0.5);
+    width: 150px;
+    box-shadow: 0 0 10px #ccc;
+    transition: all ease 0.5s;
+}
+.timelinebloc:hover{
+    padding: 0px ;
+    background: #fff7db;
+    background: rgba(150,120,200,1);
+    width: 150px;
+    box-shadow: 0 0 50px #fff;
+    transition: all ease 0.5s;
+    z-index: 100;
 }
 .timeline_head{
     padding: 5px 10px ;

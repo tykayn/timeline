@@ -102,7 +102,7 @@ function displaybloc($arr_bloc , $px=100){
         // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
         // echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
     }
-        
+      // TODO afficher la durée et il y a combien de temps ça a commencé  
     return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
@@ -308,7 +308,7 @@ $tabstampsk[] = $stamp;
 		/**
 		 *
 		 * @param type $date
-		 * @return dit combien de temps s'est passé ou va se passer une date .
+		 * @return type $string , dit combien de temps s'est passé ou va se passer une date .
 		 */
 		public function ecart($date){	
 			

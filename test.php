@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tykayn</title>
 		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="design_help-timeline.css" />
+		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="style.css" />
 		<link rel="shortcut icon" type="x-icon/png" href="img/favicon.png" />
     </head>
     <body>
@@ -42,6 +43,8 @@
 		$tableau[$_GET['trois']] =  $_GET['trois_t'];
                 $tableau['2007-01-01,2013-01-02'] =  'une durée';
             //    $tableau['1789-07-14'] =  'ceci est une révolution Française';
+                $tableau['1983-03-06'] =  'premier téléphone mobile lancé, le Motorola DynaTAC 8000X';
+                $tableau['1960-01-01'] =  'Simula, le premier langage orienté objet';
 
 
  echo timeline::frise($tableau, "asc",940);
