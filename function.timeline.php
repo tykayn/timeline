@@ -102,12 +102,11 @@ function displaybloc($arr_bloc , $px=100){
         // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
         // echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
     }
-      // TODO afficher la durée et il y a combien de temps ça a commencé  
     return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
                  <div class="timeline_head">
-                    '.$arr_bloc['date'].'
+                    '.$arr_bloc['date'].' , '. timeline::ecart($arr_bloc['date']).'
                  </div>
                  <div class="timeline_content">
                      '.$arr_bloc['content'].'
@@ -312,8 +311,8 @@ $tabstampsk[] = $stamp;
 		 */
 		public function ecart($date){	
 			
-			$boom = explode("/", 	$date);
-			$stamp =mktime(0, 0, 0, $boom[1],$boom[0],$boom[2]);
+			$boom = explode("-", 	$date);
+			$stamp =mktime(0, 0, 0, $boom[1],$boom[2],$boom[0]);
 			$ecart_stamp = time() - $stamp;
 			//si dans le passé
 			if($ecart_stamp> 0){

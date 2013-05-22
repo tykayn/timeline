@@ -9,7 +9,7 @@
     </head>
     <body>
 		<?php
-		// put your code here
+		error_reporting(E_ALL);
 		?><div class="top">
 		<img src="icon.png" alt="icone"/>
 		<a href="http://artlemoine.com"><img alt="favicon " src="http://artlemoine.com/decoration/templates/flowhtml5/favicon.png"/> Portfolio de Baptiste Lemoine</a>

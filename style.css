@@ -200,30 +200,40 @@ a:hover{
 }
 .timelinebloc{
     padding: 0px ;
-    background: #fff7db;
+    background: rgb(250,220,200);
     background: rgba(150,120,200,0.5);
     width: 150px;
     box-shadow: 0 0 10px #ccc;
     transition: all ease 0.5s;
+    height:150px;
+    overflow: auto;
 }
 .timelinebloc:hover{
     padding: 0px ;
-    background: #fff7db;
-    background: rgba(150,120,200,1);
+    background: rgb(150,120,200);
+    background: rgba(150,120,200,0.8);
     width: 150px;
     box-shadow: 0 0 50px #fff;
     transition: all ease 0.5s;
     z-index: 100;
+    height: 200px;
+    color: #fff;
 }
 .timeline_head{
     padding: 5px 10px ;
     font-size: small;
-    background: #ccc;
+    background: rgba(150,120,200,0.8);
 }
 .timeline_content{
     padding: 5px 10px;
 }
 .periode{
+    border-top:5px solid;
+    border-bottom:5px solid;
+    background: rgb(150, 153, 255);
+}
+.periode:hover{
+    background: rgb(100, 103, 205);
     border-top:5px solid;
     border-bottom:5px solid;
 }
