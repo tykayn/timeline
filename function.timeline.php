@@ -110,7 +110,7 @@ function displaybloc($arr_bloc , $px=100){
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
                  <div class="timeline_head">
-                    '.$arr_bloc['date'].' , '. timeline::ecart($arr_bloc['date']).'
+                    '.$arr_bloc['date'].' , '. timeline::ecart($arr_bloc['start']).'
                  </div>
                  <div class="timeline_content">
                      '.$arr_bloc['content'].'
@@ -244,12 +244,14 @@ $tabstampsk[] = $stamp;
             $conversions[ timeline::convert($dates_duree[0])]['content'] = $v ;
             $conversions[ timeline::convert($dates_duree[0])]['end'] =  timeline::convert($dates_duree[1]) ;
             $conversions[ timeline::convert($dates_duree[0])]['date'] = $k ;
+            $conversions[ timeline::convert($dates_duree[0])]['start'] = $dates_duree[0] ;
             
         }
         else{
             $conversions[ timeline::convert($k)]['content'] = $v ; // clé[jours_depuis_debut]
             $tab_jours[] =  timeline::convert($k);
             $conversions[ timeline::convert($k)]['date'] = $k ;
+            $conversions[ timeline::convert($k)]['start'] = $k ;
         }    
     }
                         
@@ -314,7 +316,6 @@ $tabstampsk[] = $stamp;
 		 * @return type $string , dit combien de temps s'est passé ou va se passer une date .
 		 */
 		public function ecart($date){	
-			
 			$boom = explode("-", 	$date);
 			$stamp =mktime(0, 0, 0, $boom[1],$boom[2],$boom[0]);
 			$ecart_stamp = time() - $stamp;
