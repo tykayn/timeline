@@ -41,13 +41,15 @@
 		$tableau[$_GET['un']] =  $_GET['un_t'];
 		$tableau[$_GET['deux']] =  $_GET['deux_t'];
 		$tableau[$_GET['trois']] =  $_GET['trois_t'];
-                $tableau['2007-01-01,2013-01-02'] =  'une durée';
-                $tableau['1789-07-14'] =  'ceci est une révolution Française';
+                $tableau['1930-01-01,2013-01-02'] =  'une durée';
+            //    $tableau['1789-07-14'] =  'ceci est une révolution Française';
                 $tableau['1983-03-06'] =  'premier téléphone mobile lancé, le Motorola DynaTAC 8000X';
                 $tableau['1960-01-01'] =  'Simula, le premier langage orienté objet';
-                $tableau['1898-10-04'] =  'début travaux métro de Paris';
+           //     $tableau['1898-10-04'] =  'début travaux métro de Paris';
                 $tableau['1900-07-19'] =  'ouverture première ligne de métro de Paris';
-                $tableau['1794-01-01,1848-01-01'] =  'Claude Chappe crée le réseau du télégraphe';
+          //      $tableau['1794-01-01,1848-01-01'] =  'Claude Chappe crée le réseau du télégraphe';
+                $tableau['1914-01-01,1918-01-01'] =  'WW1';
+                $tableau['1939-01-01,1945-01-01'] =  'WW2';
                 $tableau['2013-02-16,'.date('Y-m-d')] =  'GT';
                 $tableau[date('Y-m-d')] =  'today';
 

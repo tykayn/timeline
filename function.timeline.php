@@ -97,7 +97,7 @@ function displaybloc($arr_bloc , $px=100){
                 
         $px= ceil($diff_j / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;//* $GLOBALS['taille_frise'];
       $diff = '<pre>'. $diff_j  .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
-        $end ="width:". $px ."px; "; // TODO calculer
+        $end ="width:". $px ."px; "; // TODO calculer marge de hauteur selon ligne
         $classe ="periode";
         // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
         // echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
@@ -106,6 +106,7 @@ function displaybloc($arr_bloc , $px=100){
         $classe .=" today";
     }
     return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
+                <div class="peak" ></div>
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
                  <div class="timeline_head">
@@ -220,9 +221,9 @@ $tabstampsk[] = $stamp;
     // définir l'écart de date maximum
     //  si une seule année : 365 j
 
-    $largeur = 365; // jours
+    $largeur = 365; // 365 jours
     $annees = ( max($t_dates) - min($t_dates) +1 );
-    $largeur =  $annees * 365; // jours
+    $largeur =  $annees * $largeur; // jours
     $conversions = array();
     $GLOBALS['t_dates'] = $t_dates;
     $GLOBALS['largeur'] = $largeur;
