@@ -102,6 +102,9 @@ function displaybloc($arr_bloc , $px=100){
         // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
         // echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
     }
+    if( $arr_bloc['date'] == date('Y-m-d')){
+        $classe .=" today";
+    }
     return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
