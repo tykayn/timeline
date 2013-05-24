@@ -113,12 +113,17 @@ function displaybloc($arr_bloc , $px=100){
     if( $arr_bloc['date'] == date('Y-m-d')){
         $classe .=" today";
     }
+    $duree = '';
+    if(timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end'])){
+       $duree = timeline::formatTo( timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']) ) . ', '; 
+    }
+    
     return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" >
                 <div class="peak" ></div>
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
                  <div class="timeline_head">
-                    '.$arr_bloc['date'].', '.  timeline::formatTo( timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']) ).', '. timeline::ecart($arr_bloc['start']).'
+                    '.$arr_bloc['date'].', '. $duree . timeline::ecart($arr_bloc['start']).'
                     
                  </div>
                  <div class="timeline_content" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
@@ -308,10 +313,11 @@ $tabstampsk[] = $stamp;
 				;
 		}
 		/**
-		 *
-		 * @param type $date
-		 * @return donne le nombre de jours entre deux dates JJ/MM/AAAA
-		 */
+                 * 
+                 * @param type $date_start
+                 * @param type $date_end
+                 * @return donne le nombre de jours entre deux dates
+                 */
 		public function entre_deux($date_start , $date_end){
                     $nb_jours = timeline::convert($date_end) - timeline::convert($date_start) ; 
                     if($nb_jours != 0){
@@ -321,27 +327,35 @@ $tabstampsk[] = $stamp;
                         return null;
                     }
 		}
+                
                 /**
                  * rentrer un nombre de jour, retourne dans le format désiré 
                  * @param type $date
                  * @param type $format
                  */
                 public function formatTo($date , $format= 'years'){
-                    if($format == 'years'){
+                    if($date != null){
+                       if($format == 'years'){
                         //days to years
                         return round( $date /365 , 1). ' ans'; 
-                    }
-                    else{
-                        if($date < 366 && $date > 28){
-                            return round( $date /12 , 1). ' mois'; 
-                        }
-                        elseif($date > 365){
-                            return round( $date /365 , 1). ' ans'; 
                         }
                         else{
-                            return round( $date ,1) . ' jours';
-                        }
+                            if($date < 366 && $date > 28){
+                                return round( $date /12 , 1). ' mois'; 
+                            }
+                            elseif($date > 365){
+                                return round( $date /365 , 1). ' ans'; 
+                            }
+                            else{
+                                return round( $date ,1) . ' jours';
+                            }
+                        } 
                     }
+                    else{
+                        return null;
+                    }
+                       
+                    
                 }
                 
 		/**
