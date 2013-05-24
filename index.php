@@ -122,18 +122,18 @@ and open the template in the editor.
 		<h3> Exemples</h3>
 		
 		
-		<?php echo 'Aujourd\'hui : '.timeline::datejour(date('d/m/Y')); ?>.<br/>
-		<code>echo 'Aujourd\'hui : '.timeline::datejour(date('d/m/Y'));</code><br/>
+		<?php echo 'Aujourd\'hui : '.timeline::datejour(date('Y-m-d')); ?>.<br/>
+		<code>echo 'Aujourd\'hui : '.timeline::datejour(date('Y-m-d'));</code><br/>
 		
-		<?php echo 'Le jour de ma naissance était un '.timeline::datejour('16/09/1987'); ?>.<br/>
-		<code>echo 'Le jour de ma naissance était un '.timeline::datejour('16/09/1987');</code><br/>
+		<?php echo 'Le jour de ma naissance était un '.timeline::datejour('1987-09-16'); ?>.<br/>
+		<code>echo 'Le jour de ma naissance était un '.timeline::datejour('1987-09-16');</code><br/>
 		
 		
 		<?php echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .
-		timeline::ecart('15/08/2009').
-		' et c\'était un '.timeline::datejour('15/08/2009');
+		timeline::ecart('2009-08-15').
+		' et c\'était un '.timeline::datejour('2009-08-15');
 		?><br/>
-		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> timeline::ecart('15/08/2009').<br/>' et c\'était un '.<br/>timeline::datejour('15/08/2009');</code><br/><br/>
+		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> timeline::ecart('2009-08-15').<br/>' et c\'était un '.<br/>timeline::datejour('2009-08-15');</code><br/><br/>
 		
 		Et voici une frise pour visualiser ces données:
 		<?php

@@ -48,7 +48,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
         $ajout = 0;
         $jours_dans_mois = array( 
 	'01'=>'31',
-	'02'=>'28',
+	'02'=>'28',  
 	'03'=>'31',
 	'04'=>'30',
 	'05'=>'31',
@@ -60,18 +60,29 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
 	'11'=>'30',
 	'12'=>'31',
 	);
-      if(preg_match("/^\d{4}-\d{2}-\d{2}$/", $string_date)){ //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
-          $boom = explode('-', $string_date);
+            //gestion des formats différents de date
+        if(preg_match("/^\d{4}-\d{2}-\d{2}$/", $string_date)){ //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
+          $boom = explode('-', $string_date); // YYYY-MM-JJ
+          if (strpos($a,'/') !== false) {  // TODO prendre en compte la syntaxe yyyy/mm/jj
+                $boom = explode('/', $string_date); // JJ/MM/YYYY
+          }
+          else{
+            $mois = $boom[1];    
+          }
+          
+          
         $delta_annees =  ( max($boom) - min($GLOBALS['t_dates']) );
         $delta_annees = $delta_annees * 365;
             //conversion des dates en partie d'année
             //ajouter le nombre de jours depuis le début de l'année en cours
             $premier_tour = 1;
-                 for( $mois = $boom[1] ; $mois > 0; $mois-- ){ //ajouter tous les jours du mois pour chaque mois jusqu'a janvier
+                 for( $mois ; $mois > 0; $mois-- ){ //ajouter tous les jours du mois pour chaque mois jusqu'a janvier
+                     
                      if( $premier_tour == 1){
                           $ajout += $boom[2]; // ajout des jours de la date courante
                      }
                      $premier_tour = 0;
+                     // TODO gérer les années bissextiles
                      $ajout += $jours_dans_mois[$boom[1]]  ;
                 }
                 $ajout += $delta_annees;

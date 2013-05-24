@@ -6,6 +6,8 @@
 		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="design_help-timeline.css" />
 		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="style.css" />
 		<link rel="shortcut icon" type="x-icon/png" href="img/favicon.png" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="timeline.js"></script>
     </head>
     <body>
 		<?php
@@ -48,8 +50,8 @@
            //     $tableau['1898-10-04'] =  'début travaux métro de Paris';
                 $tableau['1900-07-19'] =  'ouverture première ligne de métro de Paris';
           //      $tableau['1794-01-01,1848-01-01'] =  'Claude Chappe crée le réseau du télégraphe';
-                $tableau['1914-01-01,1918-01-01'] =  'WW1';
-                $tableau['1939-01-01,1945-01-01'] =  'WW2';
+                $tableau['1914-09-01,1918-01-01'] =  'WW1';
+                $tableau['1939-09-01,1945-09-02'] =  'WW2';
                 $tableau['2013-02-16,'.date('Y-m-d')] =  'GT';
                 $tableau[date('Y-m-d')] =  'today';
 
