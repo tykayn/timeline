@@ -63,7 +63,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
             //gestion des formats différents de date
         if(preg_match("/^\d{4}-\d{2}-\d{2}$/", $string_date)){ //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
           $boom = explode('-', $string_date); // YYYY-MM-JJ
-          if (strpos($a,'/') !== false) {  // TODO prendre en compte la syntaxe yyyy/mm/jj
+          if (strpos($string_date,'/') !== false) {  // TODO prendre en compte la syntaxe yyyy/mm/jj
                 $boom = explode('/', $string_date); // JJ/MM/YYYY
           }
           else{
@@ -99,13 +99,10 @@ function displaybloc($arr_bloc , $px=100){
     $end ="";
     $classe ="";
     $diff = 1;
-    if( isset($arr_bloc['end'])){
-        
-        $debut = explode(',' , $arr_bloc['date']);
-        $debut = timeline::convert($debut[0]);
-
-        $diff_j = ceil( $arr_bloc['end'] - $debut) ;
-                
+    if( $arr_bloc['end'] != $arr_bloc['start']){
+        $debut = timeline::convert($arr_bloc['start']);
+        $fin = timeline::convert($arr_bloc['end']);
+        $diff_j = ceil( $fin - $debut) ;
         $px= ceil($diff_j / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;//* $GLOBALS['taille_frise'];
       $diff = '<pre>'. $diff_j  .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
         $end ="width:". $px ."px; "; // TODO calculer marge de hauteur selon ligne
@@ -121,7 +118,8 @@ function displaybloc($arr_bloc , $px=100){
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
                  <div class="timeline_head">
-                    '.$arr_bloc['date'].' , '. timeline::ecart($arr_bloc['start']).'
+                    '.$arr_bloc['date'].' , '. timeline::ecart($arr_bloc['start']).' ,
+                    '.  timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']).'j
                  </div>
                  <div class="timeline_content">
                      '.$arr_bloc['content'].'
@@ -253,7 +251,8 @@ $tabstampsk[] = $stamp;
             $dates_duree = explode(",", $k);
             //TODO : jours depuis début pour les durées
             $conversions[ timeline::convert($dates_duree[0])]['content'] = $v ;
-            $conversions[ timeline::convert($dates_duree[0])]['end'] =  timeline::convert($dates_duree[1]) ;
+        //    $conversions[ timeline::convert($dates_duree[0])]['end'] =  timeline::convert($dates_duree[1]) ;
+            $conversions[ timeline::convert($dates_duree[0])]['end'] =  $dates_duree[1] ;
             $conversions[ timeline::convert($dates_duree[0])]['date'] = $k ;
             $conversions[ timeline::convert($dates_duree[0])]['start'] = $dates_duree[0] ;
             
@@ -263,6 +262,7 @@ $tabstampsk[] = $stamp;
             $tab_jours[] =  timeline::convert($k);
             $conversions[ timeline::convert($k)]['date'] = $k ;
             $conversions[ timeline::convert($k)]['start'] = $k ;
+            $conversions[ timeline::convert($k)]['end'] = $k ;
         }    
     }
                         
@@ -313,13 +313,10 @@ $tabstampsk[] = $stamp;
 		 * @return donne le nombre de jours entre deux dates JJ/MM/AAAA
 		 */
 		public function entre_deux($date_start , $date_end){
-				
-				$tab_debut = explode("/" , $date_start);
-				$tab_fin = explode("/" , $date_end);
-				$duree_stamp =  mktime(0, 0, 0, $tab_fin[1],$tab_fin[0],$tab_fin[2]) - mktime(0, 0, 0, $tab_debut[1],$tab_debut[0],$tab_debut[2]);
-				$duree = variant_abs($duree_stamp/(3600*24));
-				return "$duree jours";
-				
+                    $nb_jours = timeline::convert($date_end) - timeline::convert($date_start) ; 
+                    if($nb_jours != 0){
+                        return timeline::convert($date_end) - timeline::convert($date_start) ; // jours
+                    }	
 		}	
 		/**
 		 *
