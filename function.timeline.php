@@ -113,7 +113,7 @@ function displaybloc($arr_bloc , $px=100){
     if( $arr_bloc['date'] == date('Y-m-d')){
         $classe .=" today";
     }
-    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
+    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" >
                 <div class="peak" ></div>
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
@@ -121,7 +121,7 @@ function displaybloc($arr_bloc , $px=100){
                     '.$arr_bloc['date'].', '.  timeline::formatTo( timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']) ).', '. timeline::ecart($arr_bloc['start']).'
                     
                  </div>
-                 <div class="timeline_content">
+                 <div class="timeline_content" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
                      '.$arr_bloc['content'].'
                  </div>
             </div>';
@@ -349,37 +349,19 @@ $tabstampsk[] = $stamp;
 		 * @param type $date
 		 * @return type $string , dit combien de temps s'est passé ou va se passer une date .
 		 */
-		public function ecart($date){	
-			$boom = explode("-", 	$date);
-			$stamp =mktime(0, 0, 0, $boom[1],$boom[2],$boom[0]);
-			$ecart_stamp = time() - $stamp;
-			//si dans le passé
-			if($ecart_stamp> 0){
-					if(round(($ecart_stamp /(3600*24)),0)<7){
-						return "Il y a " .round(($ecart_stamp /(3600*24)),0)." jours";
-					}
-					elseif(round(($ecart_stamp /(3600*24)),0)<31){
-						$semaines = round(($ecart_stamp /(3600*24*7)),0);
-						return "Il y a " .$semaines." semaines";
-					}
-					elseif(round(($ecart_stamp /(3600*24)),0)<365){
-						$mois = round(($ecart_stamp /(3600*24*30.5)),1);
-						return "Il y a " .$mois." mois";
-					}
-					else{
-						$ans = round(($ecart_stamp /(3600*24*365.2425)),1);
-						return "Il y a " .$ans." ans";
-					}
-			
-			}
-			elseif($ecart_stamp== 0){
-			return "Aujourd'hui";
-			}
-			elseif($ecart_stamp< 0){
-			return "Dans " .round(($ecart_stamp /(-3600*24)),0)." jours";
-			}
-			////sinon futur
-
+		public function ecart($date){
+                    $entre_deux = timeline::entre_deux($date , date('Y-m-d'));
+                    $texte = 'il y a '; //passé
+                    if( $entre_deux < 0 ){
+                         $texte = 'dans'; //futur
+                    }
+                    elseif( $entre_deux == 0 ){
+                        return 'Aujourd\'hui';
+                    }
+                    else{
+                        return $texte.timeline::formatTo($entre_deux);
+                    }
+                    
 		}
 		/**
 		 *
