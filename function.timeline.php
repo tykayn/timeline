@@ -33,7 +33,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
 
     }
  /**
-  * 
+  * @description renvoie le nombre de jours depuis le premier jour de la frise
   * @param type $array
   * @param type $order
   * @param type $taille_frise
@@ -41,10 +41,6 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
   * @return type
   */
     function convert($string_date){
-       /**
-     * renvoie le nombre de jours depuis le premier jour de la frise
-     * @return \type
-     */ 
         $ajout = 0;
         $jours_dans_mois = array( 
 	'01'=>'31',
@@ -109,7 +105,8 @@ function displaybloc($arr_bloc , $px=100){
         $end ="width:". $px ."px; "; // TODO calculer marge de hauteur selon ligne
         $classe ="periode";
         // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
-        // echo '<hr/>'.$arr_bloc['end'] . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
+        /******* DEBUUUUUUUUG ******/
+        echo  "<hr/> $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
     }
     if( $arr_bloc['date'] == date('Y-m-d')){
         $classe .=" today";
@@ -171,28 +168,16 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
 
                         $boom = explode(",", $k);
                         
-                        
-                        $tab_debut = explode("/", $boom[0]);
+                        $an_start = explode("-", $boom[0]);
+                        $an_start = $an_start[0];
+                        $an_end = explode("-", $boom[1]);
+                        $an_end = $an_end[0];
                         $tab_debut = explode("-", $boom[0]);
-                        $tab_fin = explode("/", $boom[1]);
                         $tab_fin = explode("-", $boom[1]);
                         $stamp = mktime(0,0,0,$tab_debut[1],$tab_debut[0],$tab_debut[2]);
                         $stamp_fin = mktime(0,0,0,$tab_fin[1],$tab_fin[0],$tab_fin[2]);
-                            $t_dates[max($tab_debut)] = $k ;
-                            $t_dates[max($tab_fin)] = $k ;
-                                //test d'une date avant l'époque unix
-                                if($tab_debut[2]<1970){
-                                $debut_negatif = 1;
-                                //donner un timestamp selon le nombre de jours, mois années.
-                                $stamp =((($tab_debut[0])*24*3600)+(($tab_debut[1])*$jours_dans_mois[$tab_debut[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;				
-                        //	$debug .="<br/>$k étendue -unix $stamp,$stamp_fin sta dire ".date('Y/m/d', $stamp).' à '.date('Y/m/d', $stamp_fin);
-                                }
-                                if($tab_fin[2]<1970){
-                                $stamp_fin =((($tab_fin[0])*24*3600)+(($tab_fin[1])*$jours_dans_mois[$tab_fin[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;
-                        //	$debug .="<br/> $k étendue -unix $stamp $stamp_fin , sta dire ".date('Y/m/d', $stamp);
-                                $fin_negatif = 1;
-                                }
-
+                            $t_dates[$an_start] = $an_start;
+                            $t_dates[$an_end] = $an_end ;
 
                                 $stamp_compare = $stamp;
                                 $stamp_c_fin = $stamp_fin;
@@ -214,12 +199,9 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
                         $boom = explode("-", $k);
                         $stamp = mktime(0,0,0,$boom[1],$boom[0],$boom[2]);
                         
-                        $t_dates[max($boom)] = $k ;
-                      
-                                if($boom[2]<1970){  //test d'une date avant l'époque unix
-                          //	$debug .="<br/> $boom[0] / $boom[1] / $boom[2] date ponctuelle avant époque unix $stamp";
-                                $debut_negatif = 1;	
-                                }
+                        $t_dates[max($boom)] = max($boom) ;
+                        
+
                 }
                 else{
                 die( "<div class='info'> $k est un mauvais format de date. Veuillez entrer des dates tel que JJ/MM/AAAA ou bien JJ/MM/AAAA,JJ/MM/AAAA pour les durées</div>");
@@ -236,13 +218,13 @@ $tabstampsk[] = $stamp;
     // définir l'écart de date maximum
     //  si une seule année : 365 j
 
-    $largeur = 365; // 365 jours
+    $largeur = 365; // minimum en jour pour la largeur , 365 jours
     $annees = ( max($t_dates) - min($t_dates) +1 );
     $largeur =  $annees * $largeur; // jours
     $conversions = array();
     $GLOBALS['t_dates'] = $t_dates;
     $GLOBALS['largeur'] = $largeur;
-    
+   
     
     
     
@@ -255,6 +237,7 @@ $tabstampsk[] = $stamp;
         
         if(strstr($k,',')){
             $dates_duree = explode(",", $k);
+                    $debug .= '<br/><pre>'.print_r($dates_duree , true).'  '.$dates_duree[1].' </pre>';
             //TODO : jours depuis début pour les durées
             $conversions[ timeline::convert($dates_duree[0])]['content'] = $v ;
         //    $conversions[ timeline::convert($dates_duree[0])]['end'] =  timeline::convert($dates_duree[1]) ;
@@ -266,18 +249,20 @@ $tabstampsk[] = $stamp;
         else{
             $conversions[ timeline::convert($k)]['content'] = $v ; // clé[jours_depuis_debut]
             $tab_jours[] =  timeline::convert($k);
-            $conversions[ timeline::convert($k)]['date'] = $k ;
-            $conversions[ timeline::convert($k)]['start'] = $k ;
-            $conversions[ timeline::convert($k)]['end'] = $k ;
+            $conversions[ timeline::convert($k)]['date'] = 
+                    $conversions[ timeline::convert($k)]['start'] =
+                    $conversions[ timeline::convert($k)]['end'] =
+                    $k ;
         }    
     }
-                        
+    
+
                             
   
     $debug .= "<br/>largeur de jours $largeur";
    ksort($t_dates);
     ksort($conversions);
-    
+
     $jour_max  = max($tab_jours);
     $frisewidth = 800;
     $frisecontent = "";
@@ -289,15 +274,14 @@ $tabstampsk[] = $stamp;
             $pxbloc = round( $k * $frisewidth / $largeur , 0) ; //proportion de pixels selon le jour du bloc
             $conversions[$k]['pxleft'] = $pxbloc;
             $frisecontent .= timeline::displaybloc($v , $pxbloc);
-         //   $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
+           $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
         }
-    // placement et affichage
-        // TODO savoir si des évènements se superposent
-    
   //  $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
-  //  $this->return = '<div class="timeline-tk">'.$frisecontent.'</div>'
-         //   .$debug;
-            return '<div class="timeline-tk">'.$frisecontent.'</div>';
+
+        $debug .= 'année max: '.max($t_dates).' et min : '.min($t_dates) ;
+            return '<div class="timeline-tk">'.$frisecontent.'</div>'
+           .'<fieldset class="debug info" ><h2>Debug</h2>'.$debug.'</fieldset>';
+        ;
 
 }
 /**** fin de frise ****/
