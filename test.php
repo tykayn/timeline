@@ -43,11 +43,14 @@
 		$tableau[$_GET['un']] =  $_GET['un_t'];
 		$tableau[$_GET['deux']] =  $_GET['deux_t'];
 		$tableau[$_GET['trois']] =  $_GET['trois_t'];
-                $tableau['1900-01-01,2000-01-01'] =  'grande durée';
+        //        $tableau['1000-01-01,2000-01-01'] =  'grande durée';
                 $tableau['1789-07-14'] =  'ceci est une révolution Française';
                 $tableau['1983-03-06'] =  'premier téléphone mobile lancé, le Motorola DynaTAC 8000X';
                 $tableau['1960-01-01'] =  'Simula, le premier langage orienté objet';
                 $tableau['1752-01-01'] =  'Benjamin Franklin fait n\'importe quoi avec la foudre';
+                $tableau['1769-01-01'] =  'Joseph Cugnot présente son « fardier à vapeur », un chariot sur lequel il monte une chaudière à vapeur. Il atteint 4 km/h et a une autonomie de 15 minutes.';
+                $tableau['1946-01-01'] =  'Les 10 000 premières Volkswagen Coccinelle sont construites en Allemagne.';
+                $tableau['1959-01-01'] =  'le Japon eut commencé en 1959 la construction du premier train à grande vitesse au monde.';
                 $tableau['1898-10-04,1900-07-19'] =  'début travaux métro de Paris';
                 $tableau['1900-07-19'] =  'ouverture première ligne de métro de Paris';
                 $tableau['1794-01-01,1848-01-01'] =  'Claude Chappe crée le réseau du télégraphe';

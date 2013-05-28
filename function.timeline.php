@@ -103,6 +103,7 @@ function displaybloc($arr_bloc , $px=100){
         $debut = timeline::convert($arr_bloc['start']);
         $fin = timeline::convert($arr_bloc['end']);
         $diff_j = ceil( $fin - $debut) ;
+        //TODO vérifier le calcul des pixels, ça donne un truc erronné sur 100 ans
         $px= ceil($diff_j / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;//* $GLOBALS['taille_frise'];
       $diff = '<pre>'. $diff_j  .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
         $end ="width:". $px ."px; "; // TODO calculer marge de hauteur selon ligne
