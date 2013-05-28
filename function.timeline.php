@@ -1,5 +1,8 @@
 <?php 
+
 abstract class timeline{
+    
+    
 var $return ='';
 var $largeur = 800;
 var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
@@ -66,7 +69,8 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
 	'12'=>'31',
 	);
             //gestion des formats différents de date
-        if(preg_match("/^\d{4}-\d{2}-\d{2}$/", $string_date)){ //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
+        
+        if(preg_match("/^(\d{4}-\d{2}-\d{2})|(\d{2}\/\d{2}\/\d{4})$/", $string_date)){ //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
           $boom = explode('-', $string_date); // YYYY-MM-JJ
           if (strpos($string_date,'/') !== false) {  // TODO prendre en compte la syntaxe yyyy/mm/jj
                 $boom = explode('/', $string_date); // JJ/MM/YYYY
@@ -101,7 +105,10 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
                 $ajout += $delta_annees;
            //     echo '<br/> ----- ajout: ' . $ajout;
         return $ajout;
-      }  
+      }
+      elseif(is_int($string_date)){ // gestion de l'année si on entre un nombre sans - ou /
+          
+      }
      else{
            var_dump($string_date);
         }
@@ -150,11 +157,16 @@ function displaybloc($arr_bloc , $px=100){
                  </div>
                  <div class="timeline_content" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
                      '.$arr_bloc['content'].'
-                         <hr/>
-                       entre deux:  '.timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']).'
-                         <br/>  équivalent a '.$px.' px
+                        
                  </div>
             </div>';
+    /* infos visibles dans le contenu
+<hr/>
+                       entre deux:  '.timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']).'
+                         <br/>  équivalent a '.$px.' px
+     */
+    
+    
 }
     
 public function frise($array, $order="asc", $taille_frise=1000, $op=0){
@@ -201,29 +213,14 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
                         $an_end = $an_end[0];
                         $tab_debut = explode("-", $boom[0]);
                         $tab_fin = explode("-", $boom[1]);
-                        $stamp = mktime(0,0,0,$tab_debut[1],$tab_debut[0],$tab_debut[2]);
-                        $stamp_fin = mktime(0,0,0,$tab_fin[1],$tab_fin[0],$tab_fin[2]);
-                            $t_dates[$an_start] = $an_start;
-                            $t_dates[$an_end] = $an_end ;
-
-                                $stamp_compare = $stamp;
-                                $stamp_c_fin = $stamp_fin;
-                                if($stamp <0){$stamp_compare = - $stamp;}
-                                if($stamp_fin <0){$stamp_c_fin = - $stamp_fin;}
-
-                                $duree_evenement = $stamp_c_fin - $stamp_compare;
-                  //      $debug .="<br/> $duree_evenement = $stamp_c_fin - $stamp_compare";
-                //	if(!isset($tabdurees[$k])){$tabdurees[$k] ='';}
-                        $tabdurees[$k]= $duree_evenement;
-
-                //	if(!isset($tabdebuts[$k])){$tabdebuts[$k] ='';}
-                        $tabdebuts[$k]= $stamp;
-                        $tab_start_dure[$stamp]= $duree_evenement;
-                 //       $debug .="<br/>K ajoute $tabdurees[$k]= $duree_evenement <br/>$v dans tabdebuts[$k] = $stamp <br/>  tab_start_dure[$stamp]= $duree_evenement";
+                        $t_dates[$an_start] = $an_start;
+                        $t_dates[$an_end] = $an_end ;
                 }
                 elseif(strstr($k,'/') OR strstr($k,'-')){
                         // $boom = explode("/", $k);
+                    // TODO gérer les dates /
                         $boom = explode("-", $k);
+
                         $stamp = mktime(0,0,0,$boom[1],$boom[0],$boom[2]);
                         
                         $t_dates[max($boom)] = max($boom) ;
@@ -319,10 +316,18 @@ $tabstampsk[] = $stamp;
 		 * @return Donne le jour semainier de Lundi à Dimanche.
 		 */
 		public function datejour($date){
-			$boom = explode("/", 	$date);
-			return 
-					$this->semaine[ date("N", mktime(0, 0, 0, $boom[1],$boom[0],$boom[2])) ]
-				;
+           $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
+           if(strstr($date, '/')){
+                        $boom = explode("/", 	$date);
+                        return $semaine[date("N", mktime(0, 0, 0, $boom[1],$boom[0],$boom[2]))];
+                    }
+                    else{
+                       $boom = explode("-", 	$date);
+                        return $semaine[date("N", mktime(0, 0, 0, $boom[1],$boom[2],$boom[0]))]; 
+                    }
+			
+                        
+			
 		}
 		/**
                  * 

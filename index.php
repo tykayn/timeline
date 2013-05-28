@@ -8,12 +8,15 @@ and open the template in the editor.
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tykayn</title>
 		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="design_help-timeline.css" />
+		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="style.css" />
 		<link rel="shortcut icon" type="x-icon/png" href="icon.png" />
     </head>
     <body>
     <?php
     error_reporting(E_ALL);
-    date_default_timezone_set("GMT+1");
+    date_default_timezone_set('Europe/Paris');
+    require('sidefunction.php');
+    
     ?>
 		<div class="top">
 		<img src="icon.png" alt="icone"/>
@@ -28,8 +31,9 @@ and open the template in the editor.
 		<div class="content">
 		<div class="main">
 		<h1 id="dl">Timeline TK</h1>
-		<a href="function_timeline.zip"><img alt="télécharger l'application random picture" src="http://artlemoine.com/decoration/dl.png"/>Télécharger la classe php</a><br/>
+		<!-- <a href="function_timeline.zip"><img alt="télécharger l'application random picture" src="http://artlemoine.com/decoration/dl.png"/>Télécharger la classe php</a><br/>-->
 		Bienvenue dans la page d'aide de la Timeline TK.<br/>
+                Code disponible et à jour sur <a href="http://github.com/tykayn" title="page github de tykayn">http://github.com/tykayn</a><br/>
 		Pour utiliser cette classe il suffit de lui donner en paramètre un tableau php et de mettre en place le css.
 		Si le jour actuel est présent dans la frise il est noté par une barre orange de la taille d'une journée.
 		<h2 id="exemple">Exemple</h2>
@@ -60,6 +64,12 @@ and open the template in the editor.
 		"01/01/2008,30/12/2008" => "2008",
 		"12/08/2010" => "plus tard "
 			);
+        $tableau = array(
+		"2007-01-01,2007-12-30" => "2007",
+		date(d/m/Y) => "today "
+			);
+        
+        
 			$tableau2 = array(
 		
 		"23/04/1858,4/10/1947" => "
@@ -92,7 +102,7 @@ and open the template in the editor.
 			echo 
 			timeline::frise($tableau, "asc",940).
 			timeline::css().
-			'Ou encore comme ceci:'. timeline::frise($tableau3, "asc",1000);
+			'Ou encore comme ceci:'. timeline::frise($tableau, "asc",800);
 			
 			?>
 		<h2 id="tableau">Le tableau d'évènements</h2>
