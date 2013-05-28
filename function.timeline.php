@@ -105,7 +105,7 @@ function displaybloc($arr_bloc , $px=100){
         $classe ="periode";
         // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
         /******* DEBUUUUUUUUG ******/
-      //   echo "<hr/> $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
+        echo  "<hr/> $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
     }
     if( $arr_bloc['date'] == date('Y-m-d')){
         $classe .=" today";
@@ -169,29 +169,14 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
                         
                         $an_start = explode("-", $boom[0]);
                         $an_start = $an_start[0];
-                         $an_end = explode("-", $boom[1]);
+                        $an_end = explode("-", $boom[1]);
                         $an_end = $an_end[0];
-                     //   $tab_debut = explode("/", $boom[0]);
                         $tab_debut = explode("-", $boom[0]);
-                   //     $tab_fin = explode("/", $boom[1]);
                         $tab_fin = explode("-", $boom[1]);
                         $stamp = mktime(0,0,0,$tab_debut[1],$tab_debut[0],$tab_debut[2]);
                         $stamp_fin = mktime(0,0,0,$tab_fin[1],$tab_fin[0],$tab_fin[2]);
                             $t_dates[$an_start] = $an_start;
                             $t_dates[$an_end] = $an_end ;
-                                //test d'une date avant l'époque unix
-                                if($tab_debut[2]<1970){
-                                $debut_negatif = 1;
-                                //donner un timestamp selon le nombre de jours, mois années.
-                                $stamp =((($tab_debut[0])*24*3600)+(($tab_debut[1])*$jours_dans_mois[$tab_debut[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;				
-                        //	$debug .="<br/>$k étendue -unix $stamp,$stamp_fin sta dire ".date('Y/m/d', $stamp).' à '.date('Y/m/d', $stamp_fin);
-                                }
-                                if($tab_fin[2]<1970){
-                                $stamp_fin =((($tab_fin[0])*24*3600)+(($tab_fin[1])*$jours_dans_mois[$tab_fin[1]]*24*3600)+(( $tab_debut[2])*365.2524*24*3600))*-1;
-                        //	$debug .="<br/> $k étendue -unix $stamp $stamp_fin , sta dire ".date('Y/m/d', $stamp);
-                                $fin_negatif = 1;
-                                }
-
 
                                 $stamp_compare = $stamp;
                                 $stamp_c_fin = $stamp_fin;
@@ -251,11 +236,11 @@ $tabstampsk[] = $stamp;
         
         if(strstr($k,',')){
             $dates_duree = explode(",", $k);
-                    $debug .= '<br/><pre>'.print_r($dates_duree , true).'</pre>';
+                    $debug .= '<br/><pre>'.print_r($dates_duree , true).'  '.$dates_duree[1].' </pre>';
             //TODO : jours depuis début pour les durées
             $conversions[ timeline::convert($dates_duree[0])]['content'] = $v ;
         //    $conversions[ timeline::convert($dates_duree[0])]['end'] =  timeline::convert($dates_duree[1]) ;
-            $conversions[ timeline::convert($dates_duree[1])]['end'] =  $dates_duree[1] ;
+            $conversions[ timeline::convert($dates_duree[0])]['end'] =  $dates_duree[1] ;
             $conversions[ timeline::convert($dates_duree[0])]['date'] = $k ;
             $conversions[ timeline::convert($dates_duree[0])]['start'] = $dates_duree[0] ;
             
@@ -288,13 +273,13 @@ $tabstampsk[] = $stamp;
             $pxbloc = round( $k * $frisewidth / $largeur , 0) ; //proportion de pixels selon le jour du bloc
             $conversions[$k]['pxleft'] = $pxbloc;
             $frisecontent .= timeline::displaybloc($v , $pxbloc);
-         //   $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
+           $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
         }
   //  $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
 
         $debug .= 'année max: '.max($t_dates).' et min : '.min($t_dates) ;
             return '<div class="timeline-tk">'.$frisecontent.'</div>'
-           .'<fieldset class=debug ><h2>Debug</h2>'.$debug.'</fieldset>';
+           .'<fieldset class="debug info" ><h2>Debug</h2>'.$debug.'</fieldset>';
         ;
 
 }
