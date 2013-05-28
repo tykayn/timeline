@@ -44,14 +44,23 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
         $ajout = 0;
         $jours_dans_mois = array( 
 	'01'=>'31',
+	'1'=>'31',
 	'02'=>'28',  
+	'2'=>'28',  
 	'03'=>'31',
+	'3'=>'31',
 	'04'=>'30',
+	'4'=>'30',
 	'05'=>'31',
+	'5'=>'31',
 	'06'=>'30',
+	'6'=>'30',
 	'07'=>'31',
+	'7'=>'31',
 	'08'=>'31',
+	'8'=>'31',
 	'09'=>'30',
+	'9'=>'30',
 	'10'=>'31',
 	'11'=>'30',
 	'12'=>'31',
@@ -61,27 +70,36 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
           $boom = explode('-', $string_date); // YYYY-MM-JJ
           if (strpos($string_date,'/') !== false) {  // TODO prendre en compte la syntaxe yyyy/mm/jj
                 $boom = explode('/', $string_date); // JJ/MM/YYYY
+                $mois = $boom[1]; 
           }
           else{
             $mois = $boom[1];    
           }
-          
+        //  echo '<br/> '.$string_date.' ,mois: '.$mois . ' jours dans mois: ' . $jours_dans_mois[$boom[1]];
           
         $delta_annees =  ( max($boom) - min($GLOBALS['t_dates']) );
         $delta_annees = $delta_annees * 365;
             //conversion des dates en partie d'année
             //ajouter le nombre de jours depuis le début de l'année en cours
             $premier_tour = 1;
-                 for( $mois ; $mois > 0; $mois-- ){ //ajouter tous les jours du mois pour chaque mois jusqu'a janvier
+                 for( $i = $mois ; $i > 0; $i-- ){ //ajouter tous les jours du mois pour chaque mois jusqu'a janvier
+                      
+                     $zeromois = $i;
                      
                      if( $premier_tour == 1){
                           $ajout += $boom[2]; // ajout des jours de la date courante
-                     }
-                     $premier_tour = 0;
+                          $premier_tour = 0;
+                    }
+                     else{
+                         
                      // TODO gérer les années bissextiles
-                     $ajout += $jours_dans_mois[$boom[1]]  ;
+                     $ajout += $jours_dans_mois[$i]  ;
+                     } 
+            //        echo '<br/>---- jours dans mois n° '.$i.' : ' . $jours_dans_mois[$i];
+
                 }
                 $ajout += $delta_annees;
+           //     echo '<br/> ----- ajout: ' . $ajout;
         return $ajout;
       }  
      else{
@@ -100,23 +118,29 @@ function displaybloc($arr_bloc , $px=100){
         $fin = timeline::convert($arr_bloc['end']);
         $diff_j = ceil( $fin - $debut) ;
         //TODO vérifier le calcul des pixels, ça donne un truc erronné sur 100 ans
-        $px= ceil($diff_j / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;//* $GLOBALS['taille_frise'];
+        $px= ceil($diff_j / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;
+       
+        
       $diff = '<pre>'. $diff_j  .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
         $end ="width:". $px ."px; "; // TODO calculer marge de hauteur selon ligne
         $classe ="periode";
         // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
         /******* DEBUUUUUUUUG ******/
-        echo  "<hr/> $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels.  <hr/>' ;
+  //      echo  "<hr/> $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels. (taille frise)  <hr/>' ;
+    }
+    else{
+        $px= 2;
     }
     if( $arr_bloc['date'] == date('Y-m-d')){
         $classe .=" today";
     }
     $duree = '';
-    if(timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end'])){
-       $duree = timeline::formatTo( timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']) ) . ', '; 
+    $diff_j = timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']);
+    if($diff_j>0){
+       $duree = timeline::formatTo( $diff_j ) . ', '; 
     }
     
-    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff.'" >
+    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff_j.'" >
                 <div class="peak" ></div>
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
@@ -126,6 +150,9 @@ function displaybloc($arr_bloc , $px=100){
                  </div>
                  <div class="timeline_content" title="'.$arr_bloc['date'].' , '.$arr_bloc['content'].'">
                      '.$arr_bloc['content'].'
+                         <hr/>
+                       entre deux:  '.timeline::entre_deux($arr_bloc['start'] , $arr_bloc['end']).'
+                         <br/>  équivalent a '.$px.' px
                  </div>
             </div>';
 }
@@ -185,7 +212,7 @@ public function frise($array, $order="asc", $taille_frise=1000, $op=0){
                                 if($stamp_fin <0){$stamp_c_fin = - $stamp_fin;}
 
                                 $duree_evenement = $stamp_c_fin - $stamp_compare;
-                        $debug .="<br/> $duree_evenement = $stamp_c_fin - $stamp_compare";
+                  //      $debug .="<br/> $duree_evenement = $stamp_c_fin - $stamp_compare";
                 //	if(!isset($tabdurees[$k])){$tabdurees[$k] ='';}
                         $tabdurees[$k]= $duree_evenement;
 
@@ -264,22 +291,22 @@ $tabstampsk[] = $stamp;
     ksort($conversions);
 
     $jour_max  = max($tab_jours);
-    $frisewidth = 800;
+    $frisewidth = $taille_frise;
     $frisecontent = "";
 
     // ranger les évènements dans des lignes
         // selon largeur de temps et écart par rapport au début, définir le nombre de px a mettre sur la gauche
         foreach ($conversions as $k => $v) {
             
-            $pxbloc = round( $k * $frisewidth / $largeur , 0) ; //proportion de pixels selon le jour du bloc
+            $pxbloc = round( $k * $taille_frise / $GLOBALS['largeur'] , 0) ; //proportion de pixels selon le jour du bloc
             $conversions[$k]['pxleft'] = $pxbloc;
             $frisecontent .= timeline::displaybloc($v , $pxbloc);
-           $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
+         //  $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
         }
   //  $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
 
         $debug .= 'année max: '.max($t_dates).' et min : '.min($t_dates) ;
-            return '<div class="timeline-tk">'.$frisecontent.'</div>'
+            return '<div class="timeline-tk-container"><div class="timeline-tk" style="width:'.$taille_frise.'px;">'.$frisecontent.'</div></div>'
            .'<fieldset class="debug info" ><h2>Debug</h2>'.$debug.'</fieldset>';
         ;
 
@@ -309,7 +336,7 @@ $tabstampsk[] = $stamp;
                         return timeline::convert($date_end) - timeline::convert($date_start) ; // jours
                     }
                     else{
-                        return null;
+                        return 0;
                     }
 		}
                 
@@ -318,7 +345,7 @@ $tabstampsk[] = $stamp;
                  * @param type $date
                  * @param type $format
                  */
-                public function formatTo($date , $format= 'years'){
+                public function formatTo($date , $format= 'else'){
                     if($date != null){
                        if($format == 'years'){
                         //days to years
@@ -350,6 +377,7 @@ $tabstampsk[] = $stamp;
 		 */
 		public function ecart($date){
                     $entre_deux = timeline::entre_deux($date , date('Y-m-d'));
+            //        echo ' entre deux: '. $entre_deux;
                     $texte = 'il y a '; //passé
                     if( $entre_deux < 0 ){
                          $texte = 'dans'; //futur

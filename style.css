@@ -9,7 +9,14 @@ body{
     overflow: hidden;
     min-height:400px;
 }
+.timeline-tk-container{
+    padding: 10px;
+    background: #ccc;
+    text-align: center;
+    overflow: auto;
+}
 .timeline-tk{
+    text-align: left;
     border: 1px solid #CCCCCC;
     color: #222;
     padding:5px;
@@ -19,9 +26,12 @@ body{
     display: block;
     background: #fff;
     padding:5px 0;
-    border: 1px solid orange; 
+    border: 1px solid orange;
+    display: inline-block;
+    border: 1px solid #CCCCCC;
+min-width: 500px;
+margin: 0 auto;
 }
-
 
 
 
@@ -43,16 +53,7 @@ padding:5px;
 	min-height:400px;
 
 }
-.timeline-tk{
 
-    border: 1px solid #CCCCCC;
-color: #222;
-padding:5px;
-position:relative;
-overflow: hidden;
-min-height: 250px;
-display: block;
-}
 
 .box-frise_op{
     background: none repeat scroll 0 0 #FFFFFF;

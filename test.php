@@ -40,10 +40,10 @@
 		isset($_GET['friseform'])
 		&& $_GET['friseform']== 'yay'){
 		$tableau = array();
-		$tableau[$_GET['un']] =  $_GET['un_t'];
+	 	$tableau[$_GET['un']] =  $_GET['un_t'];
 		$tableau[$_GET['deux']] =  $_GET['deux_t'];
 		$tableau[$_GET['trois']] =  $_GET['trois_t'];
-    /*            $tableau['1900-01-01,2000-01-01'] =  'grande durée';
+               $tableau['1900-01-01,2000-01-01'] =  'grande durée';
                 $tableau['1789-07-14'] =  'ceci est une révolution Française';
                 $tableau['1983-03-06'] =  'premier téléphone mobile lancé, le Motorola DynaTAC 8000X';
                 $tableau['1960-01-01'] =  'Simula, le premier langage orienté objet';
@@ -57,15 +57,16 @@
                 $tableau['1914-09-01,1918-01-01'] =  'WW1';
                 $tableau['1939-09-01,1945-09-02'] =  'WW2';
                 $tableau['2006-07-01,'.date('Y-m-d')] =  'Qzine';
-                */
+                
                 $tableau[date('Y-m-d')] =  'today';
-//$tableau['1987-09-16,'.date('Y-m-d')] =  'tykayn\'s life';
+$tableau['1987-09-16,'.date('Y-m-d')] =  'tykayn\'s life';
       
             $tableau['2013-02-16,'.date('Y-m-d')] =  'GT';
+    //        $tableau['2011-04-28,'.date('Y-m-d')] =  'GT';
             
 
 
- echo timeline::frise($tableau, "asc",940);
+ echo timeline::frise($tableau, "asc",1000);
 echo timeline::css(); 
 echo"owaiii! vous pourrez même faire passer cette frise à vos amis avec ce lien: <input type=url value=' ".curPageURL()." '/>";
 		}
