@@ -1,7 +1,3 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,6 +6,10 @@ and open the template in the editor.
 		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="design_help-timeline.css" />
 		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="style.css" />
 		<link rel="shortcut icon" type="x-icon/png" href="icon.png" />
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.js"></script>
+        <script type="text/javascript" src="timeline.js"></script>
+        
     </head>
     <body>
     <?php
@@ -38,7 +38,7 @@ and open the template in the editor.
 		Si le jour actuel est présent dans la frise il est noté par une barre orange de la taille d'une journée.
 		<h2 id="exemple">Exemple</h2>
 		Code php:
-		<code>
+		<code class="prettyprint linenums lang-php">
 		
 	<br/>include('function.timeline.php');
 	<br/><br/>$tableau = array(
@@ -60,13 +60,13 @@ and open the template in the editor.
 	include('function.timeline.php');
 	$tableau = array(
 		"01/01/2007,30/12/2007" => "2007",
-		date('d/m/Y') => "today ",
+		date('Y-m-d') => "today ",
 		"01/01/2008,30/12/2008" => "2008",
 		"12/08/2010" => "plus tard "
 			);
         $tableau = array(
 		"2007-01-01,2007-12-30" => "2007",
-		date(d/m/Y) => "today "
+		date('Y-m-d') => "today "
 			);
         
         
@@ -149,20 +149,20 @@ and open the template in the editor.
 		<?php
 	$tableau2 = array(
 		"16/09/1987" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/>",
-		"15/08/2009,".date('d/m/Y') => "vie du portfolio",
-		date('d/m/Y') => "aujourd'hui"
+		"15/08/2009,".date('Y-m-d') => "vie du portfolio",
+		date('Y-m-d') => "aujourd'hui"
 			);
 	echo timeline::frise($tableau2, "asc",600);
 	?>
 	Ce qui a été fait comme ceci:
-		<textarea>
+		<code>
 	$tableau2 = array(<br/>
 		"16/09/1987" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/> ",<br/>
 		"15/08/2009,".date('d/m/Y') => "vie du portfolio",<br/>
 		date('d/m/Y') => "aujourd'hui"<br/>
 			);<br/>
 	echo timeline::frise($tableau2, "asc",600);
-	</textarea>
+	</code>
 		<br/>
 		Et voilà, bonnes frises à vous.<br/>
 		<h2 id="test">Testez avec vos propres valeurs</h2>

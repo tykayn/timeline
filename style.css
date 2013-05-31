@@ -434,13 +434,14 @@ a:hover{
     transition: all ease 0.5s;
 
    overflow: hidden;
-    width: 2px;
+   /* width: 2px;*/
 }
 
 .mini{
-    height: 15px;
-    width: 0px;
-    padding: 0px 20px 0 0 ;
+    height: 20px;
+    width: 50%;
+ /*   padding:  0px;*/
+    color: #dedede;
 }
 .mini:hover{
     

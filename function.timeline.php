@@ -302,9 +302,10 @@ $tabstampsk[] = $stamp;
         }
   //  $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
 
-        $debug .= 'année max: '.max($t_dates).' et min : '.min($t_dates) ;
+        $debug .= '<fieldset class="debug info" ><h2>Debug</h2> année max: '.max($t_dates).' et min : '.min($t_dates).'</fieldset>' ;
+        $debug = ''; //cacher le debug
             return '<div class="timeline-tk-container"><div class="timeline-tk" style="width:'.$taille_frise.'px;">'.$frisecontent.'</div></div>'
-           .'<fieldset class="debug info" ><h2>Debug</h2>'.$debug.'</fieldset>';
+           .''.$debug.'';
         ;
 
 }

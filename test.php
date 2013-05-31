@@ -8,6 +8,7 @@
 		<link rel="shortcut icon" type="x-icon/png" href="img/favicon.png" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="timeline.js"></script>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
     </head>
     <body>
 		<?php

@@ -7,6 +7,7 @@ jQuery(document).ready(function($){
     boxes = $('.timelinebloc');
     line_height = 20 ;
     int = 0;
+    box_w = 150;
     /*
      * détection de superposition
      */
@@ -19,17 +20,18 @@ jQuery(document).ready(function($){
         return false;
         }
     }
-    function testOver(){
-        
+    function testOver(obj){
     }
     function disOverlap(){
         // prendre les W et H de toutes les boites
         i=0;
         boxPos= new Array();
         $('.box-frise').each( function(){
-            boxPos[i] = $(this).position();
-            boxPos[i].w = $(this).width();
-            boxPos[i].h = $(this).height();
+         self = $(this);
+         self.data('line','1');
+            boxPos[i] = self.position();
+            boxPos[i].w = self.width();
+            boxPos[i].h = self.height();
             i++;
         });
         
@@ -39,7 +41,7 @@ jQuery(document).ready(function($){
         currPos.h = $(this).height();
         console.log(currPos);
         //boucler sur chacune pour tester les coordonnées qui se superposent
-        $(boxPos).each( testOver)
+    //    $(boxPos).each( testOver(this))
         
         int++;
         $(this).css('margin-top', int*line_height ).css('border','solid 0px');
@@ -49,4 +51,5 @@ jQuery(document).ready(function($){
     //si superposé, bouger la div de une ligne de haut
 
     $('.box-frise').each(disOverlap);
+    $('code, textarea').addClass('prettyprint linenums');
 });
