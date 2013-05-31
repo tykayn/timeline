@@ -429,15 +429,21 @@ a:hover{
     padding: 0px ;
     background: rgb(250,220,200);
     background: rgba(150,120,200,0.5);
-    width: 150px;
+    
     box-shadow: 0 0 10px #ccc;
     transition: all ease 0.5s;
-    height: 15px;
+
    overflow: hidden;
     width: 2px;
 }
-.timelinebloc:hover{
-    padding: 0px ;
+
+.mini{
+    height: 15px;
+    width: 0px;
+    padding: 0px 20px 0 0 ;
+}
+.mini:hover{
+    
     background: rgb(150,120,200);
     background: rgba(150,120,200,0.8);
     min-width: 150px;

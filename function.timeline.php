@@ -147,7 +147,7 @@ function displaybloc($arr_bloc , $px=100){
        $duree = timeline::formatTo( $diff_j ) . ', '; 
     }
     
-    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff_j.'" >
+    return ' <div class="timelinebloc mini box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff_j.'" >
                 <div class="peak" ></div>
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
