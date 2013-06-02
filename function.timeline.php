@@ -6,7 +6,98 @@ abstract class timeline{
 var $return ='';
 var $largeur = 800;
 var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
-
+/**
+		 *
+		 * @param type $date
+		 * @return Donne le jour semainier de Lundi à Dimanche.
+		 */
+		public function datejour($date){
+           $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
+           if(strstr($date, '/')){
+                        $boom = explode("/", 	$date);
+                        return $semaine[date("N", mktime(0, 0, 0, $boom[1],$boom[0],$boom[2]))];
+                    }
+                    else{
+                       $boom = explode("-", 	$date);
+                        return $semaine[date("N", mktime(0, 0, 0, $boom[1],$boom[2],$boom[0]))]; 
+                    }
+			
+                        
+			
+		}
+		/**
+                 * 
+                 * @param type $date_start
+                 * @param type $date_end
+                 * @return donne le nombre de jours entre deux dates
+                 */
+		public function entre_deux($date_start , $date_end){
+                    $nb_jours = timeline::convert($date_end) - timeline::convert($date_start) ; 
+                    if($nb_jours != 0){
+                        return timeline::convert($date_end) - timeline::convert($date_start) ; // jours
+                    }
+                    else{
+                        return 0;
+                    }
+		}
+                
+                /**
+                 * rentrer un nombre de jour, retourne dans le format désiré 
+                 * @param type $date
+                 * @param type $format
+                 */
+                public function formatTo($date , $format= 'else'){
+                    if($date != null){
+                       if($format == 'years'){
+                        //days to years
+                        return round( $date /365 , 1). ' ans'; 
+                        }
+                        else{
+                            if($date < 366 && $date > 28){
+                                return round( $date /12 , 1). ' mois'; 
+                            }
+                            elseif($date > 365){
+                                return round( $date /365 , 1). ' ans'; 
+                            }
+                            else{
+                                return round( $date ,1) . ' jours';
+                            }
+                        } 
+                    }
+                    else{
+                        return null;
+                    }
+                       
+                    
+                }
+                
+		/**
+		 *
+		 * @param type $date
+		 * @return type $string , dit combien de temps s'est passé ou va se passer une date .
+		 */
+		public function ecart($date){
+                    $entre_deux = timeline::entre_deux($date , date('Y-m-d'));
+            //        echo ' entre deux: '. $entre_deux;
+                    $texte = 'il y a '; //passé
+                    if( $entre_deux < 0 ){
+                         $texte = 'dans'; //futur
+                    }
+                    elseif( $entre_deux == 0 ){
+                        return 'Aujourd\'hui';
+                    }
+                    else{
+                        return $texte.timeline::formatTo($entre_deux);
+                    }
+                    
+		}
+		/**
+		 *
+		 * @return donne le style pour les frises chronologiques
+		 */
+	public function css(){
+            return;
+		}
     public function build($array, $order="asc"){
         $tabstamps = array();
         $return ='';
@@ -114,8 +205,16 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
         }
     }
     
-
-function displaybloc($arr_bloc , $px=100){
+/**
+ * 
+ * @param type $arr_bloc
+ * @param type $px
+ * @param type $customclass classe personnelle ajoutée dans le bloc
+ * @return type
+ */
+function displaybloc($arr_bloc , $px=100 , $customclass=""){
+    
+    
     $px_left = $px;
     $end ="";
     $classe ="";
@@ -138,7 +237,7 @@ function displaybloc($arr_bloc , $px=100){
     else{
         $px= 2;
     }
-    if( $arr_bloc['date'] == date('Y-m-d')){
+    if( $arr_bloc['date'] == date('Y-m-d') || $arr_bloc['date'] == date('d/m/Y') ){
         $classe .=" today";
     }
     $duree = '';
@@ -147,10 +246,12 @@ function displaybloc($arr_bloc , $px=100){
        $duree = timeline::formatTo( $diff_j ) . ', '; 
     }
     
-    return ' <div class="timelinebloc box-frise '.$classe.'" style=" left: '. $px_left .'px; position : absolute; '.$end.'" data-jours="'.$diff_j.'" >
-                <div class="peak" ></div>
+    return ' 
+        <div class="timelinebloc box-frise '.$classe.' '.$customclass.'" style=" left: '. $px_left .'px; position : absolute;'.$end.'" data-jours="'.$diff_j.'" >
+                <div class="peak" style=" left: '. $px_left .'px; position : absolute;"></div>
                  <div class="timeline_period_line" style="'.$end.'">
                  </div>
+                 
                  <div class="timeline_head">
                     '.$arr_bloc['date'].', '. $duree . timeline::ecart($arr_bloc['start']).'
                     
@@ -290,7 +391,7 @@ $tabstampsk[] = $stamp;
     $jour_max  = max($tab_jours);
     $frisewidth = $taille_frise;
     $frisecontent = "";
-
+//echo '<pre>'.timeline::convert( date('Y-m-d')).' '.print_r($conversions, true). '</pre>';
     // ranger les évènements dans des lignes
         // selon largeur de temps et écart par rapport au début, définir le nombre de px a mettre sur la gauche
         foreach ($conversions as $k => $v) {
@@ -298,109 +399,46 @@ $tabstampsk[] = $stamp;
             $pxbloc = round( $k * $taille_frise / $GLOBALS['largeur'] , 0) ; //proportion de pixels selon le jour du bloc
             $conversions[$k]['pxleft'] = $pxbloc;
             $frisecontent .= timeline::displaybloc($v , $pxbloc);
-         //  $debug .= "<hr/>yeeeeee <pre>".print_r($pxbloc,true)."</pre><hr/>";        
+            
         }
-  //  $debug .= "<hr/> conversions <pre>".print_r($conversions,true)."</pre> dates: <pre>".print_r($t_dates,true)."</pre><hr/>";
-
-        $debug .= 'année max: '.max($t_dates).' et min : '.min($t_dates) ;
+$GLOBALS['taille_frise'] = $taille_frise;
+        // ajout de marqueur du jour
+        $arrrr = array();
+        $arrrr['content'] =  ' Aujourd\'hui';
+        $arrrr['start'] = $arrrr['end'] = $arrrr['date'] =  date('Y-m-d');
+        $today = date('Y-m-d');
+        $pxbloc = timeline::datetopx($today) ; //proportion de pixels selon le jour du bloc
+       print_r($arrrr);
+        $frisecontent .= timeline::displaybloc( $arrrr , $pxbloc , 'marqueur today');
+        
+        $debug .= '<fieldset class="debug info" ><h2>Debug</h2>année max: '.max($t_dates).' et min : '.min($t_dates).'</fieldset>' ;
+      //  $debug = '';
             return '<div class="timeline-tk-container"><div class="timeline-tk" style="width:'.$taille_frise.'px;">'.$frisecontent.'</div></div>'
-           .'<fieldset class="debug info" ><h2>Debug</h2>'.$debug.'</fieldset>';
+           .''.$debug.'';
         ;
 
 }
+/**
+ * proportion de pixels selon le jour du bloc.
+ * convertit une chaine de date en pixels a gauche dans la frise pour un bloc qui remprésenterait cette date
+ * @param type $string
+ */
+public function datetopx($string){
+  return  round(  timeline::convert( $string ) * $GLOBALS['taille_frise'] / $GLOBALS['largeur'] , 0);
+}
+
+/**
+ * 
+ * @param type $string
+ * @return type
+ */
+public function datetoarray($string){
+  $arr = array();
+  $arr['date'] = $string;
+  return  $arr;
+}
 /**** fin de frise ****/
 
-		/**
-		 *
-		 * @param type $date
-		 * @return Donne le jour semainier de Lundi à Dimanche.
-		 */
-		public function datejour($date){
-           $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
-           if(strstr($date, '/')){
-                        $boom = explode("/", 	$date);
-                        return $semaine[date("N", mktime(0, 0, 0, $boom[1],$boom[0],$boom[2]))];
-                    }
-                    else{
-                       $boom = explode("-", 	$date);
-                        return $semaine[date("N", mktime(0, 0, 0, $boom[1],$boom[2],$boom[0]))]; 
-                    }
-			
-                        
-			
-		}
-		/**
-                 * 
-                 * @param type $date_start
-                 * @param type $date_end
-                 * @return donne le nombre de jours entre deux dates
-                 */
-		public function entre_deux($date_start , $date_end){
-                    $nb_jours = timeline::convert($date_end) - timeline::convert($date_start) ; 
-                    if($nb_jours != 0){
-                        return timeline::convert($date_end) - timeline::convert($date_start) ; // jours
-                    }
-                    else{
-                        return 0;
-                    }
-		}
-                
-                /**
-                 * rentrer un nombre de jour, retourne dans le format désiré 
-                 * @param type $date
-                 * @param type $format
-                 */
-                public function formatTo($date , $format= 'else'){
-                    if($date != null){
-                       if($format == 'years'){
-                        //days to years
-                        return round( $date /365 , 1). ' ans'; 
-                        }
-                        else{
-                            if($date < 366 && $date > 28){
-                                return round( $date /12 , 1). ' mois'; 
-                            }
-                            elseif($date > 365){
-                                return round( $date /365 , 1). ' ans'; 
-                            }
-                            else{
-                                return round( $date ,1) . ' jours';
-                            }
-                        } 
-                    }
-                    else{
-                        return null;
-                    }
-                       
-                    
-                }
-                
-		/**
-		 *
-		 * @param type $date
-		 * @return type $string , dit combien de temps s'est passé ou va se passer une date .
-		 */
-		public function ecart($date){
-                    $entre_deux = timeline::entre_deux($date , date('Y-m-d'));
-            //        echo ' entre deux: '. $entre_deux;
-                    $texte = 'il y a '; //passé
-                    if( $entre_deux < 0 ){
-                         $texte = 'dans'; //futur
-                    }
-                    elseif( $entre_deux == 0 ){
-                        return 'Aujourd\'hui';
-                    }
-                    else{
-                        return $texte.timeline::formatTo($entre_deux);
-                    }
-                    
-		}
-		/**
-		 *
-		 * @return donne le style pour les frises chronologiques
-		 */
-	public function css(){
- return;
-		}
+		
 }
 ?>

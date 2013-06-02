@@ -4,8 +4,8 @@
  */
 jQuery(document).ready(function($){
   
-    boxes = $('.timelinebloc');
-    line_height = 20 ;
+    boxes = $('.timelinebloc:not(.marqueur)');
+    line_height = $('.timelinebloc:first-child').height() / 2 ;
     int = 0;
     /*
      * détection de superposition
@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
         }
     }
     function testOver(){
-        
+        console.log( ' looooog '+this.w )
     }
     function disOverlap(){
         // prendre les W et H de toutes les boites
