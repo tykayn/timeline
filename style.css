@@ -10,7 +10,7 @@ body{
     min-height:400px;
 }
 .timeline-tk-container{
-    padding: 10px;
+    padding:  10px;
     background: #ccc;
     text-align: center;
     overflow: auto;
@@ -19,18 +19,16 @@ body{
     text-align: left;
     border: 1px solid #CCCCCC;
     color: #222;
-    padding:5px;
+    padding: 0 5px;
     position:relative;
     overflow: hidden;
     min-height: 250px;
-    display: block;
     background: #fff;
-    padding:5px 0;
     border: 1px solid orange;
     display: inline-block;
     border: 1px solid #CCCCCC;
-min-width: 500px;
-margin: 0 auto;
+    min-width: 500px;
+    margin: 0 auto;
 }
 
 
@@ -432,9 +430,14 @@ a:hover{
     
     box-shadow: 0 0 10px #ccc;
     transition: all ease 0.5s;
-
+    height: 150px;
    overflow: hidden;
+<<<<<<< HEAD
    /* width: 2px;*/
+=======
+    width: 2px;
+    z-index: 1;
+>>>>>>> branch 'master' of https://github.com/tykayn/timeline.git
 }
 
 .mini{
@@ -447,7 +450,7 @@ a:hover{
     
     background: rgb(150,120,200);
     background: rgba(150,120,200,0.8);
-    min-width: 150px;
+    min-width: 500px;
     height:400px;
     box-shadow: 0 0 50px #fff;
     transition: all ease 0.5s;
@@ -468,19 +471,12 @@ a:hover{
     padding: 5px 10px;
 }
 .timeline_head , .timeline_content{
-        opacity: 0;
+        opacity: 0.8;
         transition: all ease 0.5s;
-}
-.periode{
-    border-top:5px solid;
-    border-bottom:5px solid;
-    background: rgb(150, 153, 255);
-    height:15px;
-  /*  overflow: hidden;*/
-    border-left: none;
-    margin-top:20px;
-}
-.peak{
+        overflow: hidden;
+        width: 100%;
+        min-width:300px;
+}.peak{
    content: "peak";
    display:block;
    width: 0; 
@@ -492,12 +488,23 @@ a:hover{
    border-right: 20px solid transparent;
    z-index: 110;
 }
+.periode{
+    border-top:5px solid;
+    border-bottom:5px solid;
+    background: rgb(150, 153, 255);
+   /* height:15px;
+    overflow: hidden;*/
+    border-left: none;
+    margin-top:20px;
+    min-width: 300px;
+}
+
 .periode:hover{
     background: rgb(100, 103, 205);
     border-top:5px solid;
     border-bottom:5px solid;
     min-height:150px;
-    min-width:150px !important;
+    min-width:400px !important;
 }
 .periode .timeline_period_line{
     display: inline-block;
@@ -508,4 +515,18 @@ a:hover{
 .today, .today:hover, .timelinebloc.today{
     background: green;
     border-color: green;
+}
+
+
+.timelinebloc.marqueur{
+    height: 100%;
+    margin-top: 0 !important;
+    width: 1px  !important;
+    z-index: 0;
+}
+.timelinebloc.marqueur.today{
+    z-index: 3;
+}
+.timelinebloc.marqueur:hover{
+    z-index: 200;
 }
