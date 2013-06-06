@@ -2,7 +2,9 @@
 
 abstract class timeline{
     
-    
+    public function __construct(){
+        $GLOBALS['taille_bloc'] = 400; // tialle d'un bloc déplié, sert à les marquer de classe "ending" et les déplier sur la gauche
+    }
 var $return ='';
 var $largeur = 800;
 var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche');
@@ -214,7 +216,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
  */
 function displaybloc($arr_bloc , $px=100 , $customclass=""){
     
-    
+    $taille_bloc = $GLOBALS['taille_bloc'];
     $px_left = $px;
     $end ="";
     $classe ="";
@@ -227,12 +229,11 @@ function displaybloc($arr_bloc , $px=100 , $customclass=""){
         $px= ceil($diff_j / $GLOBALS['largeur'] * $GLOBALS['taille_frise'] ) ;
        
         
+        
       $diff = '<pre>'. $diff_j  .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
         $end ="width:". $px ."px; "; // TODO calculer marge de hauteur selon ligne
-        $classe ="periode";
-        // $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/>' ;
-        /******* DEBUUUUUUUUG ******/
-  //      echo  "<hr/> $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels. (taille frise)  <hr/>' ;
+        $classe .="periode";
+        $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/> '." $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels. (taille frise)  <hr/>' ;
     }
     else{
         $px= 2;
@@ -245,7 +246,14 @@ function displaybloc($arr_bloc , $px=100 , $customclass=""){
     if($diff_j>0){
        $duree = timeline::formatTo( $diff_j ) . ', '; 
     }
-    
+    //test si on doit faire déplier le bloc sur la gauche car trop à la fin de la frise pour être visible
+    // si les $px sont a moins de la taille du bloc déplié
+    $debug .=" left: $px_left , taille frise: $GLOBALS[taille_frise] , taille bloc: $taille_bloc ";
+    echo " <br/>left: $px_left , taille frise: $GLOBALS[taille_frise] , taille bloc: $taille_bloc ";
+    if($px_left > ($GLOBALS['taille_frise'] - $taille_bloc)){
+            $classe .= "ending";
+        }
+        
     return ' 
         <div class="timelinebloc box-frise '.$classe.' '.$customclass.'" style=" left: '. $px_left .'px; position : absolute;'.$end.'" data-jours="'.$diff_j.'" >
                 <div class="peak" style=" left: '. $px_left .'px; position : absolute;"></div>
@@ -270,7 +278,7 @@ function displaybloc($arr_bloc , $px=100 , $customclass=""){
     
 }
     
-public function frise($array, $order="asc", $taille_frise=1000, $op=0){
+public function frise($array, $order="asc", $taille_frise=900, $op=0){
     $GLOBALS['taille_frise'] = $taille_frise;
     
 	//analyse de la durée
@@ -362,7 +370,7 @@ $tabstampsk[] = $stamp;
         
         if(strstr($k,',')){
             $dates_duree = explode(",", $k);
-                    $debug .= '<br/><pre>'.print_r($dates_duree , true).'  '.$dates_duree[1].' </pre>';
+            //        $debug .= '<br/><pre>'.print_r($dates_duree , true).'  '.$dates_duree[1].' </pre>';
             //TODO : jours depuis début pour les durées
             $conversions[ timeline::convert($dates_duree[0])]['content'] = $v ;
         //    $conversions[ timeline::convert($dates_duree[0])]['end'] =  timeline::convert($dates_duree[1]) ;
@@ -408,12 +416,12 @@ $GLOBALS['taille_frise'] = $taille_frise;
         $arrrr['start'] = $arrrr['end'] = $arrrr['date'] =  date('Y-m-d');
         $today = date('Y-m-d');
         $pxbloc = timeline::datetopx($today) ; //proportion de pixels selon le jour du bloc
-       print_r($arrrr);
+     //  print_r($arrrr);
         $frisecontent .= timeline::displaybloc( $arrrr , $pxbloc , 'marqueur today');
         
-        $debug .= '<fieldset class="debug info" ><h2>Debug</h2> année max: '.max($t_dates).' et min : '.min($t_dates).'</fieldset>' ;
-        $debug = ''; //cacher le debug
-            return '<div class="timeline-tk-container"><div class="timeline-tk" style="width:'.$taille_frise.'px;">'.$frisecontent.'</div></div>'
+        $debug = '<fieldset class="debug info" ><h2>Debug</h2> année max: '.max($t_dates).' et min : '.min($t_dates).' <br/> '.$debug.'</fieldset>' ;
+      //  $debug = ''; //cacher le debug
+            return '<div class="timeline-tk-container"><div class="timeline-tk" data-jours="'.$GLOBALS['largeur'].'" data-width="'.$taille_frise.'" style="width:'.$taille_frise.'px;">'.$frisecontent.'</div></div>'
            .''.$debug.'';
         ;
 

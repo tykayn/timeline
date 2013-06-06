@@ -530,3 +530,6 @@ a:hover{
 .timelinebloc.marqueur:hover{
     z-index: 200;
 }
+.ending:hover{
+    transform: translate(-150px, 0px);
+}

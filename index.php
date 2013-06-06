@@ -53,7 +53,7 @@
 	<br/>	echo timeline::css();
 			
 		</code>
-		(n'oubliez pas de faire les echo) <br/>
+		n'oubliez pas de faire les echo() <br/>
 		Ce qui donne ceci:
 		
 		<?php
@@ -100,9 +100,9 @@
 		7 milliards d'humains"
 			);
 			echo 
-			timeline::frise($tableau, "asc",940).
+			timeline::frise($tableau, "asc").
 			timeline::css().
-			'Ou encore comme ceci:'. timeline::frise($tableau, "asc",800);
+			'Ou encore comme ceci:'. timeline::frise($tableau, "asc");
 			
 			?>
 		<h2 id="tableau">Le tableau d'évènements</h2>
