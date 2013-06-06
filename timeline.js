@@ -6,6 +6,7 @@ jQuery(document).ready(function($){
   
     boxes = $('.timelinebloc:not(.marqueur)');
     line_height = $('.timelinebloc:first-child').height() / 2 ;
+    line_height = 30 ;
     int = 0;
     box_w = 150;
     /*
