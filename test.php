@@ -73,7 +73,7 @@ $tableau['1987-09-16,'.date('Y-m-d')] =  'tykayn\'s life';
             
 
 
- echo timeline::frise($tableau, "asc",1000);
+ echo timeline::frise($mangastyl, "asc",1000);
 echo timeline::css(); 
 echo"owaiii! vous pourrez même faire passer cette frise à vos amis avec ce lien: <input type=url value=' ".curPageURL()." '/>";
 		
