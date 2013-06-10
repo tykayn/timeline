@@ -1,0 +1,16 @@
+/* 
+    Document   : style
+    Created on : 10 juin 2013, 17:54:01
+    Author     : gutenborg
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body { 
+    display: block;
+    font-size: 1.25em;
+    width: 50%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
