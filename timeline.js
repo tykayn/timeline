@@ -20,8 +20,17 @@ jQuery(document).ready(function($){
         return false;
         }
     }
-    function testOver(){
-        console.log( ' looooog '+this.w )
+    function dump(obj) {
+    var out = '';
+    for (var i in obj) {
+        out += i + ": " + obj[i] + "\n";
+    }
+
+    console.log(out);
+}
+    function testOver(obj){
+        dump(obj.w)
+      //  console.log( ' looooog '+ eval(obj) )
     }
     function disOverlap(){
         // prendre les W et H de toutes les boites
@@ -42,7 +51,8 @@ jQuery(document).ready(function($){
         currPos.h = $(this).height();
         console.log(currPos);
         //boucler sur chacune pour tester les coordonnées qui se superposent
-    //    $(boxPos).each( testOver(this))
+        testOver( currPos )
+       //$(boxPos).each( testOver( $(this) ))
         
         int++;
         $(this).css('margin-top', int*line_height ).css('border','solid 0px');
