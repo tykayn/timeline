@@ -1,0 +1,96 @@
+/* 
+    Document   : design.css
+    Created on : 6 nov. 2011, 18:58:58
+    Author     : TyKayn
+	File source : http://artlemoine.com
+    Description:
+    stylesheet for demo of tktabs.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+body{
+	font-family:Calibri,arial;
+	margin: 0 auto;
+	width:900px;
+	
+}
+h1,h2,h3{
+	color:#526A96;
+	border-bottom:1px solid #526A96;
+}
+quote{
+	font-style: italic;
+	background: #EDF7F2;
+	padding:10px;
+	display:block;
+}
+code{
+	color:#526A96;
+	display:block;
+	padding:10px;
+	border-left:3px solid #526A96;
+	background:#EDF7F2;
+	margin-bottom: 15px;
+}
+a {
+    border: medium none;
+    border-radius: 0 0 15px 15px;
+    display: block;
+    height: 50px;
+    padding: 5px;
+    text-decoration: none;
+}
+a:hover , a .active{
+	color:#fff !important;
+}
+a[href~="http"]{
+	background: #FFE36B;
+}
+a[href|="http"] {
+  background: red;
+  }
+.bravo {
+	background: #FFE36B;
+	padding:50px;
+}
+.tabs {
+	display:block;
+	color: #4A55A5;
+	margin: 0 auto;
+	background: #EDF7F2;
+	text-align:center;
+	border-top:2px solid #4A55A5;
+}
+
+
+.tab { 
+    display: inline-block;
+	background: #fff;
+	margin: 0 5px;
+	min-width: 50px;
+	height:50px;
+	text-align:center;
+	border-radius:3px;
+	
+	
+}
+
+.tab:hover , .tab:active {
+	  transition-property: background, color;  
+  transition-duration: 0.5s, 0.5s; 
+      -moz-transition-duration: 0.5s;
+    -moz-transition-timing-function: ease-in;
+	background:#A454BC;
+	color:#fff;
+	
+}
+nav .tab{
+
+}
+
+.active{
+	background: #4A55A5;
+}

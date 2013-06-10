@@ -1,0 +1,163 @@
+/* 
+    Document   : design
+    Created on : 4 mars 2012, 22:54:23
+    Author     : TyKayn
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+body { 
+    display: block;
+/*	overflow:hidden; */
+		width:800px;
+		margin: 0 auto;
+}
+.empreinte { 
+    display: block;
+	background: blue;
+	width:100%;
+	height:100%;
+}
+
+.b { 
+    display: block;
+}
+
+.nav { 
+    background: none repeat scroll 0 0 orange;
+    clear: left;
+    display: block;
+    float: left;
+}
+
+#tktr_setup{
+	margin:0 auto;
+	display: block;
+	width:600px;
+	font-size: small;
+}
+.tktr_info{
+	color: green;
+	display: block;
+	background:#EAFFC9;
+	padding: 5px;
+	border-radius: 4px;
+}
+#tktr_setup fieldset label{
+
+	display: inline-block;
+	width:20%;
+	text-align: right;
+	padding-right:10px;
+}
+.tktr_comform label{
+    clear: left;
+    display: block;
+    float: left;
+    padding-right: 10px;
+    text-align: right;
+    width: 10%;
+}
+.tktr_comform{
+    margin: 0 0 20px;
+	display:block;
+}
+.tktr_comform input:active,.tktr_comform input:focus {
+	background:#F8FFD1;
+	color: #3D3C21;
+}
+.tktr_comform textarea{
+    background: none repeat scroll 0 0 #F9F9E8;
+    border: 1px solid #CCCCCC;
+    display: block;
+    margin-left: 10.5%;
+    width: 80%;
+}
+.tktr_comform input{
+    float: left;
+}
+.tktr_nocom, .tktr_com_nb{
+
+	display:block;
+	background: #F8FFD1;
+	color: #3D3C21;
+	border-bottom:1px solid #3D3C21;
+	padding: 10px;
+}
+a .tktr_com_foot{
+
+	display:block;
+	background: #F8FFD1;
+	color: #3D3C21;
+	border-bottom:1px solid #3D3C21;
+	padding: 10px;
+	margin-bottom:100px;
+}
+
+.tktr_com{
+	font-family: Calibri,Arial,Times;
+	color: #3D4456;
+	display:block;
+	border:2px solid #fff;
+	background: #F9F9E8;
+	padding:5px;
+	-moz-transition: all ease 0.2s;
+	-o-transition: all ease 0.2s;
+	-webkit-transition: all ease 0.2s;
+}
+.tktr_com:hover{
+	font-family: Calibri,Arial,Times;
+	color: #3D4456;
+	display:block;
+	border:2px solid #fff;
+	background: #FFFF84;
+	-moz-transition: all ease 0.2s;
+	-o-transition: all ease 0.2s;
+	-webkit-transition: all ease 0.2s;
+}
+.tktr_com_pseudo{
+	color: #2C3C63;
+	font-weight: bold;
+	padding:20px;
+	display:block;
+
+}
+.tktr_com_pseudo:first-letter{
+	font-size:150%;
+
+}
+a .tktr_com_pseudo  {
+	display: inline-block;
+	min-width:50px;
+	color: #5285B2;
+	text-decoration: none;
+
+
+}
+a:hover .tktr_com_pseudo {
+	color: #FF7200;
+	text-decoration: none;
+
+
+}
+.tktr_com_date{
+	font-size: x-small;
+	font-style: italic;
+	display:block;
+}
+.tktr_com_msg{
+	
+    padding: 10px 87px;
+	display:block;
+}
+.show{
+	background: #BBFF84;
+}
+input[type=submit]{
+	width:100%
+}

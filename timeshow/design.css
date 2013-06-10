@@ -1,0 +1,101 @@
+/* 
+    Document   : design
+    Created on : 4 mars 2012, 22:54:23
+    Author     : TyKayn
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body {
+    background: url('bg.jpg');
+	margin:0;
+}
+
+a {
+    background: none repeat scroll 0 0 #E6EDF2;
+    display: inline-block;
+    min-width: 50px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+	color:#000;
+}
+
+a:link {color: black;}
+a:hover, a:focus, a:active  { 
+				background: #222;
+				color: #fff !important;
+				text-decoration:none !important;
+			}	
+
+/*---------------------------MAIN-------------------------------*/
+.main{
+	margin:0 auto 200px;
+	width:960px;
+	font-size: normal;
+	background: #fff;
+	padding:20px;
+	margin-top:100px;
+	top:100px;
+	position:relative;
+	z-index:1;
+}
+.top{
+    background: none repeat scroll 0 0 #CCCCCC;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 10%;
+    z-index: 2;
+}
+.top a{
+    display:block;
+}
+.foot{
+	margin:0 auto;
+	width:100%;
+	overflow: hidden;
+	font-size: normal;
+}
+
+code{
+border-radius: 3px;
+	display:block;
+	background: #000;
+	color: #fff;
+	padding:10px;
+	margin:20px 0;
+}
+li strong, h1,h2,h3{ color:#AD5600;}
+
+textarea{
+width:600px; height:150px; display:block; 	background: #000;
+	color: #fff;}
+	
+
+.timeshow , .tktr_add_comm_timeshow{
+color:#222;
+font-weight:bold;
+border-radius:5px;
+}
+#tktr_setup{
+	background: #fff;
+	margin:0 auto 10px;
+	width:960px;
+}
+fieldset {
+background: #fff;
+	margin:0 auto 2px;
+	
+	}
+.timeshow_more{
+background:#AFE2FF;
+border-radius:5px;
+}
+.item {display:inline-block;}
+.item a img {width:100px;}
+.item a {display:block;}
+.item:hover {background:#ddd;}
+#mesblogs{display:inline-block; color:#000; background:#fff;}

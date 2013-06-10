@@ -1,0 +1,150 @@
+/**
+ * URL-maker
+ * @name URL-maker
+ * @author Baptiste Lemoine - http://artlemoine.com
+ * @version 1
+ * @date August 06, 2011
+ * @category web application
+ * @example Visit http://artlemoine.com/medias/apps/url-maker/demo
+ */
+
+body{
+	    background: none repeat scroll 0 0 #1d485b;
+    border: 2px solid #595959;
+    border-radius: 10px 10px 10px 10px;
+    font-family: Euphemia,Calibri,Arial;
+    margin: 0 10%;
+    padding: 5px;
+    min-width: 800px;
+}
+fieldset {
+	    background: none repeat scroll 0 0 #B8D1DB;
+    border: 1px solid #B2BAC4;
+    border-radius: 5px 5px 5px 5px;
+    margin: 10px 0;
+    padding: 4px;
+}
+
+html{background:#000;}
+table {border: solid 1px blue; border-radius:10px; width:100%; padding:5px;}
+tr:hover{border: solid 1px #fff; border-radius:5px; background:#edffe0;}
+
+table tr ,tr, td { padding-left:10% ;background:#bcc9f9;}
+
+.debug{ display:none; font-size:9px; background-color: #edd87a; border-radius:5px; border:solid 2px #edaf7a; padding-left:20%; font-size:small;}
+
+.menu {background:#FFFFFF none repeat scroll 0 0;
+left:20px;
+position:fixed; top:100px; left:20px; width: 100px; padding:20px;}
+
+.debug{ background: #ccc; border-radius:2px; border-left:solid 4px #CC0000; padding-left:-2%; font-size:large;}
+h1{
+	color:#fff;
+	background: #4e6771;
+	border-radius:2px;
+	padding-left:20px;
+}
+h2{
+	color:#fff;
+	background: #314953;
+	border-radius:2px;
+	margin:0 auto;
+	padding-left:20px;
+}
+.results{
+	background-color: #FFFFFF;
+    display: block;
+    margin-top: 5px;
+    padding: 1px 10px 10px 15px;
+}
+.folders{
+	display: table-cell;
+	width:200px;
+	font-weight: bold;
+	padding: 5px 20px;
+		background:#222; 
+		color:#fff;
+}
+.textes{
+	display: table-cell;
+	width:80%;
+	font-size: 9pt;
+	padding: 5px 10px;
+}
+.unfound{
+	color:red;
+	background: #ddd;
+	font-style: italic;
+}
+.thumbimg{
+	color:brown;
+	border-bottom: 1px solid #3366ff;
+	font-size:8pt;
+}
+.grand{
+	color:brown;
+	border-bottom:solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #00ff99;
+	font-size:10pt;
+}
+iframe{
+	width:100%;
+	height:500px;
+	border:2px solid #cc9900;
+	border-radius:10px;
+
+}
+
+
+.aide{
+	font-family: Calibri,Georgia,Arial;
+	margin: 0 auto;
+	width: 700px;
+	background: #fff;
+	padding:5px;
+	
+}
+.aide h2{
+	margin: 10px 0;
+}
+a{
+	color: #00B6FF;
+	display:block;
+	margin:0;
+	padding:0;
+}
+a:hover{
+	color:orange;
+	background:#436E7F;
+}
+.info{
+	font-family: Georgia,Arial;
+	margin: 0 auto;
+	background: #fff;
+	padding:10px;
+	border:3px solid #FF7F23;
+	display:block;
+	
+}
+.help{
+
+	background: #000;
+	display:inline-block;
+	color:#fff;
+	padding:5px;
+	border-radius:5px;
+}
+
+.textes h2{
+	margin-bottom:10px;
+}
+
+.aide{
+	background: #fff ;
+	    padding: 1px 50px;
+}
+
+fieldset{
+	    padding: 1px 50px;
+}

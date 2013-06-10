@@ -1,0 +1,41 @@
+<?php 
+
+	/*
+	* Merci de faire un lien vers mon site si cette classe vous a été utile :)
+	*
+	*	Affiche une image choisie aléatoirement dans le dossier où se trouve ce fichier.
+	*	Pour cela, copiez ce code dans votre page HTML à l'endroit où vous voulez placer l'image aléaroire:
+	*	<?php include('PATH_TO_THIS_FOLDER/random_picture.php'); ?>
+	*		(pensez à remplacer PATH_TO_THIS_FOLDER par le bon chemin)
+	*
+	* @author TyKayn, Baptiste Lemoine
+	* @filesource http://artlemoine.com
+	*/
+
+
+function make_random_pic($path=''){
+
+	$files = scandir(getcwd().'/'.$path);//scanne le dossier courant
+	$formats_ok = array('.jpg','jpeg','.png','.bmp','.gif');
+	$i=0;
+	$clean_files = array();
+			//pour chaque fichier, si c'est une image l'ajouter au tableau des random a choisir
+	foreach ($files AS $k=>$v){
+	$format = substr(strtolower($v),-4,4);
+		if(in_array($format,$formats_ok)){
+		$clean_files[$i]=$v;
+		$i++;
+		}
+	}
+	//choisit une image au hasard
+	if(count($clean_files)>0){
+		$random_number = rand(0, count($clean_files)-1);
+		$addr = $path.$clean_files[$random_number];
+		//écit le code HTML pour afficher l'image
+		echo"<img class='random_picture' src='$addr' title='$clean_files[$random_number]' alt='image $clean_files[$random_number]'/>";
+	}
+	else{
+		echo" <strong>(pas d'image dans ce dossier)</strong>";
+	}
+}
+?>

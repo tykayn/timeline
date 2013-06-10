@@ -1,0 +1,19 @@
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript">
+	$(document).ready(function(){
+	$(".spoil div").hide();
+	$(".spoil div").before("<span class='spoil_button'>(voir la suite)</span>");
+	$(".spoil").click(function(){
+	$(this).children("div").toggle("fast");
+	var spoiltexte = $(this).children(".spoil_button").text();
+	if(spoiltexte == "(voir la suite)"){
+	$(this).children(".spoil_button").text("(cacher)");}
+	else{
+	$(this).children(".spoil_button").text("(voir la suite)");
+	}
+
+	});
+	});
+	</script>
+	
+Script de spoil trouvé sur	<a href="http://artlemoine.com">le portfolio de Baptiste Lemoine</a>
