@@ -2,7 +2,7 @@
 
 abstract class timeline{
     
-    public function __construct(){
+    public function _construct(){
         $GLOBALS['taille_bloc'] = 400; // tialle d'un bloc déplié, sert à les marquer de classe "ending" et les déplier sur la gauche
     }
 var $return ='';
@@ -215,7 +215,7 @@ var $semaine = array('','lundi','mardi','mercredi','jeudi','vendredi','samedi','
  * @return type
  */
 function displaybloc($arr_bloc , $px=100 , $customclass=""){
-    
+    $GLOBALS['taille_bloc'] = 400;
     $taille_bloc = $GLOBALS['taille_bloc'];
     $px_left = $px;
     $end ="";
@@ -233,7 +233,7 @@ function displaybloc($arr_bloc , $px=100 , $customclass=""){
       $diff = '<pre>'. $diff_j  .' sur '.$GLOBALS['largeur'].' jours </pre>'  ;
         $end ="width:". $px ."px; "; // TODO calculer marge de hauteur selon ligne
         $classe .="periode";
-        $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/> '." $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels. (taille frise)  <hr/>' ;
+    //    $debug.= '<hr/>'. $GLOBALS['taille_frise'].' pixels <hr/> '." $GLOBALS[largeur] jours de largeur = $GLOBALS[taille_frise] px ; $arr_bloc[start] = $debut à $arr_bloc[end] = $fin _______ ".''. $fin . ' - ' . $debut .' =  '.$diff_j.' jours. soit '. $px .'px sur '. $GLOBALS['taille_frise'].' pixels. (taille frise)  <hr/>' ;
     }
     else{
         $px= 2;
@@ -248,7 +248,7 @@ function displaybloc($arr_bloc , $px=100 , $customclass=""){
     }
     //test si on doit faire déplier le bloc sur la gauche car trop à la fin de la frise pour être visible
     // si les $px sont a moins de la taille du bloc déplié
-    $debug .=" left: $px_left , taille frise: $GLOBALS[taille_frise] , taille bloc: $taille_bloc ";
+  //  $debug .=" left: $px_left , taille frise: $GLOBALS[taille_frise] , taille bloc: $taille_bloc ";
     echo " <br/>left: $px_left , taille frise: $GLOBALS[taille_frise] , taille bloc: $taille_bloc ";
     if($px_left > ($GLOBALS['taille_frise'] - $taille_bloc)){
             $classe .= "ending";
@@ -280,7 +280,7 @@ function displaybloc($arr_bloc , $px=100 , $customclass=""){
     
 public function frise($array, $order="asc", $taille_frise=900, $op=0){
     $GLOBALS['taille_frise'] = $taille_frise;
-    
+    $GLOBALS['taille_bloc'] = 400;
 	//analyse de la durée
 	$debug = $rendu_simple = $decalage_debut =$classe_spe =$return = $pixels = $pixlarge = $stamp_fin = $stamp = '';
 	$tabdebuts = array();

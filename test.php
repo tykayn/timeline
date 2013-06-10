@@ -11,6 +11,7 @@
         <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
     </head>
     <body>
+        
 		<?php
 		error_reporting(E_ALL);
 		?><div class="top">
@@ -24,6 +25,7 @@
 		<h1 id="dl">Timeline TK, Votre propre frise:</h1>
 		<?php
 		include('function.timeline.php');
+		include('arrays.php');
 	//	print_r($_GET);
 	function curPageURL() {
  $pageURL = 'http';
@@ -36,7 +38,11 @@
  }
  return $pageURL;
 }
-
+?>
+    <fieldset>
+		<legend>Remplissez les champs suivants</legend>
+		<form method='get' action='test.php'>
+    <?php
 		if(
 		isset($_GET['friseform'])
 		&& $_GET['friseform']== 'yay'){
@@ -70,13 +76,10 @@ $tableau['1987-09-16,'.date('Y-m-d')] =  'tykayn\'s life';
  echo timeline::frise($tableau, "asc");
 echo timeline::css(); 
 echo"owaiii! vous pourrez même faire passer cette frise à vos amis avec ce lien: <input type=url value=' ".curPageURL()." '/>";
-		}
+		
 
 		
 		?>
-		<fieldset>
-		<legend>Remplissez les champs suivants</legend>
-		<form method='get' action='test.php'>
 		<input type=date name="un" placeholder='date' required value="<?php echo $_GET['un']; ?>"/>
 		<input type=text name="un_t" placeholder='description'value="<?php echo $_GET['un_t']; ?>"/><br/>
 		
@@ -85,10 +88,24 @@ echo"owaiii! vous pourrez même faire passer cette frise à vos amis avec ce lie
 		
 		<input type=date name="trois" placeholder='date' required value="<?php echo $_GET['trois']; ?>"/>
 		<input type=text name="trois_t" placeholder='description' value="<?php echo $_GET['trois_t']; ?>"/><br/>
+                <?php
+                
+                }
+                else{
+                    ?>
+                <input type=date name="un" placeholder='date' required />
+		<input type=text name="un_t" placeholder='description'/><br/>
 		
-		<input type=submit value="envoyer la purée">
-		<input type=hidden name="friseform" value="yay" />
-		</form>
+		<input type=date name="deux" placeholder='date' required />
+		<input type=text name="deux_t" placeholder='description' /><br/>
+		
+		<input type=date name="trois" placeholder='date' required />
+		<input type=text name="trois_t" placeholder='description' /><br/>
+<?php
+                }
+                ?>
+                <input type=submit value="envoyer la purée">
+		<input type=hidden name="friseform" value="yay" /></form>
 		</fieldset>
 		<br/>
 		<br/>
