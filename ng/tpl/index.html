@@ -1,12 +1,13 @@
 template chargé
 
 {{ test}}
+
 <fieldset>
             Brut annuel:<input type="number" ng-model=" brutannuel ">
              <br/>
-            {{ brutannuel }}  €<br/>
-            mensuel: {{ brutannuel / 12 | number:2}} €<br/>
-            net annuel: {{ brutannuel * 0.77  | number:2}} €<br/>
-            net mensuel: {{ brutannuel / 12 * 0.77  | number:2 }} €<br/>
+            {{ brutannuel }}<br/>
+            mensuel: {{ brutannuel / 12 }}<br/>
+            net annuel: {{ brutannuel / *0.77}}<br/>
+            net mensuel: {{ brutannuel / 12 * 0.77 }}<br/>
             eh oui jammy!
             </fieldset>
