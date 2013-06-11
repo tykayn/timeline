@@ -17,14 +17,16 @@ h1,h2,h3{
     color: #ccc;
 }
 fieldset{
-    width: 24%;
+    width: 49%;
     float: left;
-    padding-left: 1%;
+    padding: 20px;
     box-sizing: border-box;
     clear: none;
     display: table-cell;
-    height:300px;
-    margin: 25px 0;
+    height: 300px;
+    margin: 5px 0;
+    border: #fff 1px solid;
+    box-shadow: 0 0 5px #ccc;
 }
 abbr{
     border-bottom: dashed skyblue 1px;
@@ -39,4 +41,7 @@ em{
 }
 .ng-dirty{
     color: blue;
+}
+#prixobjet , #profilperso{
+    width: 50%;
 }

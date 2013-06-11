@@ -42,8 +42,7 @@
             return 'soit '+ pognon.toFixed(2)  + ' millions d\'€' ;
         }
     }
-    $scope.profil = 1398.37;
-    $scope.test = 'hello le test';
+    $scope.profil = 1430.22
     $scope.brutannuel = 38000;
     $scope.prixObjet = 100;
     $scope.objets = 20;

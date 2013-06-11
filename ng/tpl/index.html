@@ -1,6 +1,3 @@
-template chargé
-
-{{ test}}
 <div id="choisir">
     <div>
         Sélectionnez votre profil pour comparer combien de temps mettrait telle célébrité à gagner de quoi se payer un de ces couteux objets.
@@ -10,7 +7,7 @@ template chargé
 			<h2>Choisissez votre profil</h2>
 			<select id="choix" ng-model="profil">
 				<option value="{{ brutannuel / 12 }}">Votre profil perso {{brutannuel / 12 |number:0 }} € brut / mois</option>
-				<option value="1398.37">SMIC 1 398,37 € / mois</option>
+				<option value="1430.22">SMIC 1 430,22 € / mois</option>
 				<option value="231000">Hugh Laurie 231 000 € / mois</option>
 				<option value="477239">Bill Gates 477 239 € / mois</option>
 				<option value="50916.69">Barack Obama 50 916,69 € / mois</option>
@@ -48,15 +45,16 @@ template chargé
 				
 			</select>
             <br/>valeur de l'objet: {{ objets | number:0 }}€<br/>
-			C'est à dire: {{objets * 151/(brutannuel / 12 * 0.77) | number:1}}h, {{ calcul(objets, (profil*12) )}} de salaire net.<br/>
+			C'est à dire: <em>{{ calcul( objets, brutannuel )}}</em> de salaire net pour vous<br/>
+            et  <em>{{ calcul(objets, (profil*12) )}}</em> de salaire net pour le profil sélectionné.<br/>
             
             Pour le profil sélectionné, c'est envisageable en l'an {{ futur }}.<br/>
 			</fieldset>
-	<fieldset>	Vous avez envie de vous acheter un truc qui va vous coûter :
-<input id="prixobjet" ng-model="prixObjet" type="number" size="5">
+	<fieldset id="prixobjet">	Vous avez envie de vous acheter un truc qui va vous coûter :
+<input  ng-model="prixObjet" type="number" size="5">
 euros.
 <br>
-<strong>Mais cela vaut il vraiment <em>{{ calcul(prixObjet, brutannuel )}}</em> de votre temps de travail ?<br></strong>
+<strong>Mais cela vaut il vraiment <em>{{ calcul(prixObjet, brutannuel )}}</em> de <abbr title="En partant d'une base de 151heures par mois, et d'un salaire de {{ brutannuel }} € bruts annuels">votre temps de travail</abbr> ?<br></strong>
 Une heure vaut:<br/>
 {{(brutannuel / 12 * 0.77)/151 |number:2}}€ net
 <br/> {{(brutannuel / 12)/151 |number:2}}€ brut.
@@ -64,7 +62,7 @@ Une heure vaut:<br/>
 		
 </div>
 
-<fieldset>
+<fieldset id="profilperso">
             Brut annuel:<input type="number" ng-model=" brutannuel ">
              <br/>
             {{ brutannuel }}  €<br/>
