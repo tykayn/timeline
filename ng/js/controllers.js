@@ -7,10 +7,11 @@
     $scope.calcul =     function(obj,brutannuel){
             console.log("brutannuel" + brutannuel);
       var result =   obj / brutannuel * 0.77  ; // convertir le brut annuel en net
+      
       console.log("result " + result+' mois');
       console.log("result " + result*31 +' jours');
         if( result < 0.5){
-         var h = result *5*31*24
+         var h = result *5*31*7
             return h.toFixed(2)  + ' heures';
         }
         else
@@ -23,8 +24,8 @@
         }
         else if(result > 11){
              var ans = result / 12 
-         $scope.futur =  d.getFullYear() + ans.toFixed(1)
-            return ans.toFixed(2) + ' ans';
+         $scope.futur =  parseFloat(d.getFullYear()) + parseFloat(ans.toFixed(1))
+            return ans.toFixed(1) + ' ans';
             
         }
         else{
