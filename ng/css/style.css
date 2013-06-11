@@ -13,4 +13,30 @@ body {
     padding: 10px;
     margin: 0 auto;
 }
-
+h1,h2,h3{
+    color: #ccc;
+}
+fieldset{
+    width: 24%;
+    float: left;
+    padding-left: 1%;
+    box-sizing: border-box;
+    clear: none;
+    display: table-cell;
+    height:300px;
+    margin: 25px 0;
+}
+abbr{
+    border-bottom: dashed skyblue 1px;
+    display: inline-block;
+    cursor: help;
+}
+em{
+    
+}
+.ng-pristine{
+    color: green;
+}
+.ng-dirty{
+    color: blue;
+}

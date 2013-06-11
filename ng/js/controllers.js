@@ -34,7 +34,12 @@
         return 'heh'
     }
     
-    
+    $scope.millions = function(nombre){
+        if( nombre*12*0.77 > 100000){
+            var pognon = nombre*12*0.77 / 1000000
+            return 'soit '+ pognon.toFixed(2)  + ' millions d\'€' ;
+        }
+    }
     $scope.profil = 1398.37;
     $scope.test = 'hello le test';
     $scope.brutannuel = 38000;
