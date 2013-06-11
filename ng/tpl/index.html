@@ -2,9 +2,14 @@ template chargé
 
 {{ test}}
 <div id="choisir">
+    <div>
+        Sélectionnez votre profil pour comparer combien de temps mettrait telle célébrité à gagner de quoi se payer un de ces couteux objets.
+    </div>
+        
     <fieldset>
 			<h2>Choisissez votre profil</h2>
 			<select id="choix" ng-model="profil">
+				<option value="{{ brutannuel / 12 }}">Votre profil perso {{brutannuel / 12 |number:0 }} € brut / mois</option>
 				<option value="1398.37">SMIC 1 398,37 € / mois</option>
 				<option value="231000">Hugh Laurie 231 000 € / mois</option>
 				<option value="477239">Bill Gates 477 239 € / mois</option>
@@ -24,10 +29,12 @@ template chargé
 		<fieldset>
 			<h2>Quelques objets de luxe:</h2>
 			<select id="objets" ng-model="objets">
-				<option value="25000000">(train) Une rame de 500 places de TGV Duplex. 25 M€</option>
-				<option value="20" selected="selected">Une sortie en bar uppé 20€</option>
+				
+				<option value="20">Une sortie en bar uppé 20€</option>
 				<option value="669">(téléphone portable) Galaxy S 3. 669€</option>
-				<option value="19000000">(train) Une rame Thalys de 377 places. 19 M€</option>
+				<option value="1900">Vélo électrique awesome 1900€</option>
+				<option value="25000000">(train) Une rame de 500 places de TGV Duplex. 25 M€</option>
+                <option value="19000000">(train) Une rame Thalys de 377 places. 19 M€</option>
 				<option value="32000000">(train) Une rame Eurostar de 794 places. 32 M€</option>
 				<option value="15000">(voiture) Smart. 15 k€</option>
 				<option value="320000000">(pont) viaduc de Millau. 320 M€</option>
@@ -40,16 +47,16 @@ template chargé
 				<option value="1200000">livre: "Die Aufgabe" ("la Tâche") par Tomas Alexander Hartmann. 13 pages.</option>
 				
 			</select>
-            
             <br/>valeur de l'objet: {{ objets | number:0 }}€<br/>
-			C'est à dire: {{ calcul(objets, (profil*12*0.77) )}} de salaire net.<br/>
-            Envisageable en l'an {{ futur }}
+			C'est à dire: {{objets * 151/(brutannuel / 12 * 0.77) | number:1}}h, {{ calcul(objets, (profil*12) )}} de salaire net.<br/>
+            
+            Pour le profil sélectionné, c'est envisageable en l'an {{ futur }}.<br/>
 			</fieldset>
 	<fieldset>	Vous avez envie de vous acheter un truc qui va vous coûter :
 <input id="prixobjet" ng-model="prixObjet" type="number" size="5">
 euros.
 <br>
-<strong>Mais cela vaut il vraiment <em>{{prixObjet * 151/(brutannuel / 12 * 0.77) | number:1}}</em> heures de votre temps de travail ?<br></strong>
+<strong>Mais cela vaut il vraiment <em>{{ calcul(prixObjet, brutannuel )}}</em> de votre temps de travail ?<br></strong>
 Une heure vaut:<br/>
 {{(brutannuel / 12 * 0.77)/151 |number:2}}€ net
 <br/> {{(brutannuel / 12)/151 |number:2}}€ brut.

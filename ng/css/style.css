@@ -32,7 +32,7 @@ abbr{
     cursor: help;
 }
 em{
-    
+    color: green;
 }
 .ng-pristine{
     color: green;
