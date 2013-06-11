@@ -6,7 +6,7 @@
     <fieldset>
 			<h2>Choisissez votre profil</h2>
 			<select id="choix" ng-model="profil">
-				<option value="{{ brutannuel / 12 }}">Votre profil perso {{brutannuel / 12 |number:0 }} € brut / mois</option>
+				<option value="{{ brutannuel / 12 }}" selected='selected'>Votre profil perso {{brutannuel / 12 |number:0 }} € brut / mois</option>
 				<option value="1430.22">SMIC 1 430,22 € / mois</option>
 				<option value="231000">Hugh Laurie 231 000 € / mois</option>
 				<option value="477239">Bill Gates 477 239 € / mois</option>
@@ -50,7 +50,9 @@
             
             Pour le profil sélectionné, c'est envisageable en l'an {{ futur }}.<br/>
 			</fieldset>
-	<fieldset id="prixobjet">	Vous avez envie de vous acheter un truc qui va vous coûter :
+	<fieldset id="prixobjet">
+        <h2>Estimation</h2>
+        Vous avez envie de vous acheter un truc qui va vous coûter :
 <input  ng-model="prixObjet" type="number" size="5">
 euros.
 <br>
@@ -63,7 +65,8 @@ Une heure vaut:<br/>
 </div>
 
 <fieldset id="profilperso">
-            Brut annuel:<input type="number" ng-model=" brutannuel ">
+    <h2>Votre brut annuel</h2>
+            <input type="number" ng-model=" brutannuel ">
              <br/>
             {{ brutannuel }}  €<br/>
             mensuel: {{ brutannuel / 12 | number:2}} €<br/>
