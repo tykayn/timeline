@@ -13,7 +13,7 @@ Une heure vaut:<br/>
 </fieldset>
 		<fieldset>
 			<h2>Choisissez votre profil</h2>
-			<select id="choix">
+			<select id="choix" ng-model="profil">
 				<option value="1398.37">SMIC 1 398,37 € / mois</option>
 				<option value="231000">Hugh Laurie 231 000 € / mois</option>
 				<option value="477239">Bill Gates 477 239 € / mois</option>
@@ -27,7 +27,8 @@ Une heure vaut:<br/>
 				<option value="40000">Laurent Ruquier 40000 € / mois</option>
 				<option value="3280000">Mylène Farmer 3280000 € / mois</option>
 			</select>
-			<br>
+            Salaire net annuel: {{ profil*12*0.77 | number:2 }} €<br>
+			
 			Quelques objets de luxe:<br>
 			<select id="objets" ng-model="objets">
 				<option value="25000000">(train) Une rame de 500 places de TGV Duplex. 25 M€</option>
@@ -46,7 +47,10 @@ Une heure vaut:<br/>
 				<option value="1200000">livre: "Die Aufgabe" ("la Tâche") par Tomas Alexander Hartmann. 13 pages.</option>
 				
 			</select>
-			C'est à dire: {{ calcul(objets)| number:4}} de salaire net.<br/>
+            
+            <br/>valeur de l'objet: {{ objets | number:0 }}€<br/>
+			C'est à dire: {{ calcul(objets, (profil*12*0.77) )}} de salaire net.<br/>
+            Envisageable en {{ futur }}
 			</fieldset></div>
 
 <fieldset>
@@ -55,7 +59,7 @@ Une heure vaut:<br/>
             {{ brutannuel }}  €<br/>
             mensuel: {{ brutannuel / 12 | number:2}} €<br/>
             net annuel: {{ brutannuel * 0.77  | number:2}} €<br/>
-            net mensuel: {{ brutannuel / 12 * 0.77  | number:2 }} €<br/>valeur de l'objet: {{ objets }}€<br/>
+            net mensuel: {{ brutannuel / 12 * 0.77  | number:2 }} €<br/>
             
             <br/>
             eh oui jammy!
