@@ -21,11 +21,29 @@ jQuery(document).ready(function($){
         return false;
         }
     }
-    function testOver(){
-        console.log( ' looooog '+this.w )
+    function dump(obj) {
+    var out = '';
+    for (var i in obj) {
+        out += i + ": " + obj[i] + "\n";
+    }
+
+    console.log(out);
+}
+    function testOver(obj){
+        dump(obj.w)
+      //  console.log( ' looooog '+ eval(obj) )
     }
     function disOverlap(){
         // prendre les W et H de toutes les boites
+        
+        //si bloc sort du champ de vision, le décaler a gauche
+               
+               frisew = $(this).parent().width();
+               
+            //$('.timeline-tk').first().width();
+        
+        
+        
         i=0;
         boxPos= new Array();
         $('.box-frise').each( function(){
@@ -35,6 +53,13 @@ jQuery(document).ready(function($){
             boxPos[i].w = self.width();
             boxPos[i].h = self.height();
             i++;
+            leftpos = $(this).position().left;
+            diffw = frisew - $(this).width();
+            if(  leftpos + self.width() > frisew  ){
+                console.log( ' position ' + leftpos + ' , '+ diffw );
+                self.css('margin-left', '-' + (leftpos + self.width() - frisew) + 'px' );
+                console.log( self.css('margin-left') )
+            }
         });
         
         //prendre les W et H de la boite actuelle
@@ -43,7 +68,8 @@ jQuery(document).ready(function($){
         currPos.h = $(this).height();
         console.log(currPos);
         //boucler sur chacune pour tester les coordonnées qui se superposent
-    //    $(boxPos).each( testOver(this))
+        testOver( currPos )
+       //$(boxPos).each( testOver( $(this) ))
         
         int++;
         $(this).css('margin-top', int*line_height ).css('border','solid 0px');
@@ -51,7 +77,9 @@ jQuery(document).ready(function($){
      console.log(int);
     }
     //si superposé, bouger la div de une ligne de haut
-
+    
+    
+    
     $('.box-frise').each(disOverlap);
     $('code, textarea').addClass('prettyprint linenums');
 });

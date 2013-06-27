@@ -432,12 +432,8 @@ a:hover{
     transition: all ease 0.5s;
     height: 150px;
    overflow: hidden;
-<<<<<<< HEAD
-   /* width: 2px;*/
-=======
-    width: 2px;
+    /*width: 2px;*/
     z-index: 1;
->>>>>>> branch 'master' of https://github.com/tykayn/timeline.git
 }
 
 .mini{
@@ -458,14 +454,19 @@ a:hover{
     color: #fff;
     margin-top:5px;
 }
-.timelinebloc:hover .timeline_head , .timelinebloc:hover .timeline_content{
-        opacity: 1;
+.timelinebloc:hover , .timelinebloc:hover .timeline_head , .timelinebloc:hover .timeline_content{
+        opacity: 1 !important;
         transition: all ease 0.5s;
+        z-index: 2;
+        background: rgba(250,220,250,1);
 }
 .timeline_head{
     padding: 5px 10px ;
     font-size: small;
     background: rgba(150,120,200,0.8);
+}
+.timelinebloc:hover .timeline_head {
+    background: rgba(220,200,220,1);
 }
 .timeline_content{
     padding: 5px 10px;
@@ -500,7 +501,7 @@ a:hover{
 }
 
 .periode:hover{
-    background: rgb(100, 103, 205);
+    background: rgba(200, 203, 255,1);
     border-top:5px solid;
     border-bottom:5px solid;
     min-height:150px;
