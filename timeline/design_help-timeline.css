@@ -63,13 +63,26 @@ a:hover, a:focus, a:active  {
 code{
 border-radius: 3px;
 	display:block;
-	background: #000;
-	color: #fff;
+/*	background: #000;
+	color: #fff;*/
 	padding:10px;
 	margin:20px 0;
+    border: solid 2px grey;
 }
 li strong, h1,h2,h3{ color:#AD5600;}
 
 textarea{
 width:600px; height:150px; display:block; 	background: #000;
 	color: #fff;}
+
+.debugland{
+    background: #defede;
+    padding-left: 10%;
+}
+
+
+/************ pretty classes *******/
+
+.lang-php .pln{
+    color: blue !important;
+}

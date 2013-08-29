@@ -1,19 +1,23 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tykayn</title>
 		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="design_help-timeline.css" />
+		<link rel="stylesheet" media="screen" type="text/css" title="Mon design" href="style.css" />
 		<link rel="shortcut icon" type="x-icon/png" href="icon.png" />
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.js"></script>
+        <script type="text/javascript" src="timeline.js"></script>
+        
     </head>
     <body>
-		<?php
-		error_reporting(E_ERROR | E_WARNING | E_PARSE);
-		?>
+    <?php
+   // error_reporting(E_ALL);
+    date_default_timezone_set('Europe/Paris');
+    require('sidefunction.php');
+    
+    ?>
 		<div class="top">
 		<img src="icon.png" alt="icone"/>
 		<a href="http://artlemoine.com"><img alt="favicon " src="http://artlemoine.com/decoration/templates/flowhtml5/favicon.png"/> Portfolio de Baptiste Lemoine</a>
@@ -27,13 +31,14 @@ and open the template in the editor.
 		<div class="content">
 		<div class="main">
 		<h1 id="dl">Timeline TK</h1>
-		<a href="function_timeline.zip"><img alt="télécharger l'application random picture" src="http://artlemoine.com/decoration/dl.png"/>Télécharger la classe php</a><br/>
+		<!-- <a href="function_timeline.zip"><img alt="télécharger l'application random picture" src="http://artlemoine.com/decoration/dl.png"/>Télécharger la classe php</a><br/>-->
 		Bienvenue dans la page d'aide de la Timeline TK.<br/>
+                Code disponible et à jour sur <a href="http://github.com/tykayn" title="page github de tykayn">http://github.com/tykayn</a><br/>
 		Pour utiliser cette classe il suffit de lui donner en paramètre un tableau php et de mettre en place le css.
 		Si le jour actuel est présent dans la frise il est noté par une barre orange de la taille d'une journée.
 		<h2 id="exemple">Exemple</h2>
 		Code php:
-		<code>
+		<code class="prettyprint linenums lang-php">
 		
 	<br/>include('function.timeline.php');
 	<br/><br/>$tableau = array(
@@ -43,22 +48,28 @@ and open the template in the editor.
 	<br/>	"12/08/10" => "plus tard "
 	<br/>		);
 	<br/>		
-	<br/>	$timeline = new timeline();
-	<br/>	echo $timeline->frise($tableau, "asc",940);
-	<br/>	echo $timeline->css();
+	<br/>	timeline = new timeline();
+	<br/>	echo timeline::frise($tableau, "asc",940);
+	<br/>	echo timeline::css();
 			
 		</code>
-		(n'oubliez pas de faire les echo) <br/>
+		n'oubliez pas de faire les echo() <br/>
 		Ce qui donne ceci:
 		
 		<?php
 	include('function.timeline.php');
 	$tableau = array(
 		"01/01/2007,30/12/2007" => "2007",
-		date('d/m/Y') => "today ",
+		date('Y-m-d') => "today ",
 		"01/01/2008,30/12/2008" => "2008",
 		"12/08/2010" => "plus tard "
 			);
+        $tableau = array(
+		"2007-01-01,2007-12-30" => "2007",
+		date('Y-m-d') => "today "
+			);
+        
+        
 			$tableau2 = array(
 		
 		"23/04/1858,4/10/1947" => "
@@ -88,12 +99,10 @@ and open the template in the editor.
 		
 		7 milliards d'humains"
 			);
-			
-			$timeline = new timeline();
 			echo 
-			$timeline->frise($tableau, "asc",940).
-			$timeline->css().
-			'Ou encore comme ceci:'. $timeline->frise($tableau3, "asc",1000);
+			timeline::frise($tableau, "asc").
+			timeline::css().
+			'Ou encore comme ceci:'. timeline::frise($tableau, "asc");
 			
 			?>
 		<h2 id="tableau">Le tableau d'évènements</h2>
@@ -123,37 +132,37 @@ and open the template in the editor.
 		<h3> Exemples</h3>
 		
 		
-		<?php echo 'Aujourd\'hui : '.$timeline->datejour(date('d/m/Y')); ?>.<br/>
-		<code>echo 'Aujourd\'hui : '.$timeline->datejour(date('d/m/Y'));</code><br/>
+		<?php echo 'Aujourd\'hui : '.timeline::datejour(date('Y-m-d')); ?>.<br/>
+		<code>echo 'Aujourd\'hui : '.timeline::datejour(date('Y-m-d'));</code><br/>
 		
-		<?php echo 'Le jour de ma naissance était un '.$timeline->datejour('16/09/1987'); ?>.<br/>
-		<code>echo 'Le jour de ma naissance était un '.$timeline->datejour('16/09/1987');</code><br/>
+		<?php echo 'Le jour de ma naissance était un '.timeline::datejour('1987-09-16'); ?>.<br/>
+		<code>echo 'Le jour de ma naissance était un '.timeline::datejour('1987-09-16');</code><br/>
 		
 		
 		<?php echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .
-		$timeline->ecart('15/08/2009').
-		' et c\'était un '.$timeline->datejour('15/08/2009');
+		timeline::ecart('2009-08-15').
+		' et c\'était un '.timeline::datejour('2009-08-15');
 		?><br/>
-		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> $timeline->ecart('15/08/2009').<br/>' et c\'était un '.<br/>$timeline->datejour('15/08/2009');</code><br/><br/>
+		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> timeline::ecart('2009-08-15').<br/>' et c\'était un '.<br/>timeline::datejour('2009-08-15');</code><br/><br/>
 		
 		Et voici une frise pour visualiser ces données:
 		<?php
 	$tableau2 = array(
 		"16/09/1987" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/>",
-		"15/08/2009,".date('d/m/Y') => "vie du portfolio",
-		date('d/m/Y') => "aujourd'hui"
+		"15/08/2009,".date('Y-m-d') => "vie du portfolio",
+		date('Y-m-d') => "aujourd'hui"
 			);
-	echo $timeline->frise($tableau2, "asc",600);
+	echo timeline::frise($tableau2, "asc",600);
 	?>
 	Ce qui a été fait comme ceci:
-		<textarea>
+		<code>
 	$tableau2 = array(<br/>
 		"16/09/1987" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/> ",<br/>
 		"15/08/2009,".date('d/m/Y') => "vie du portfolio",<br/>
 		date('d/m/Y') => "aujourd'hui"<br/>
 			);<br/>
-	echo $timeline->frise($tableau2, "asc",600);
-	</textarea>
+	echo timeline::frise($tableau2, "asc",600);
+	</code>
 		<br/>
 		Et voilà, bonnes frises à vous.<br/>
 		<h2 id="test">Testez avec vos propres valeurs</h2>
@@ -161,15 +170,28 @@ and open the template in the editor.
 		<fieldset>
 		<legend>Remplissez les champs suivants</legend>
 		<form method='get' action='test.php'>
-		<input type=date name="un" placeholder='date' required value="<?php echo $_GET['un']; ?>"/>
-		<input type=text name="un_t" placeholder='description'value="<?php echo $_GET['un_t']; ?>"/><br/>
+                    <?php if( isset($_GET['un']) && $_GET['un'] != ''){  echo '
+                        
+		<input type=date name="un" placeholder=date required value=" $_GET[un] "/>
+		<input type=text name="un_t" placeholder="description" value=" $_GET[un_t] "/><br/>
 		
-		<input type=date name="deux" placeholder='date' required value="<?php echo $_GET['deux']; ?>"/>
-		<input type=text name="deux_t" placeholder='description' value="<?php echo $_GET['deux_t']; ?>"/><br/>
+		<input type=date name="deux" placeholder=date required value="$_GET[deux]"/>
+		<input type=text name="deux_t" placeholder=description value="$_GET[deux_t]"/><br/>
 		
-		<input type=date name="trois" placeholder='date' required value="<?php echo $_GET['trois']; ?>"/>
-		<input type=text name="trois_t" placeholder='description' value="<?php echo $_GET['trois_t']; ?>"/><br/>
+		<input type=date name="trois" placeholder=date required value="$_GET[trois]"/>
+		<input type=text name="trois_t" placeholder=description value="$_GET[trois_t]"/><br/>
+                     '; } else{ ?>
+                
+                <input type=date name="un" placeholder='date' required value=""/>
+		<input type=text name="un_t" placeholder='description'value=""/><br/>
 		
+		<input type=date name="deux" placeholder='date' required value=""/>
+		<input type=text name="deux_t" placeholder='description' value=""/><br/>
+		
+		<input type=date name="trois" placeholder='date' required value=""/>
+		<input type=text name="trois_t" placeholder='description' value=""/><br/>
+                <?php } ?>
+                
 		<input type=submit value="envoyer la purée">
 		<input type=hidden name="friseform" value="yay" />
 		</form>
