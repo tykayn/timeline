@@ -13,7 +13,7 @@
     </head>
     <body>
     <?php
-    error_reporting(E_ALL);
+   // error_reporting(E_ALL);
     date_default_timezone_set('Europe/Paris');
     require('sidefunction.php');
     
@@ -170,15 +170,28 @@
 		<fieldset>
 		<legend>Remplissez les champs suivants</legend>
 		<form method='get' action='test.php'>
-		<input type=date name="un" placeholder='date' required value="<?php echo $_GET['un']; ?>"/>
-		<input type=text name="un_t" placeholder='description'value="<?php echo $_GET['un_t']; ?>"/><br/>
+                    <?php if( isset($_GET['un']) && $_GET['un'] != ''){  echo '
+                        
+		<input type=date name="un" placeholder=date required value=" $_GET[un] "/>
+		<input type=text name="un_t" placeholder="description" value=" $_GET[un_t] "/><br/>
 		
-		<input type=date name="deux" placeholder='date' required value="<?php echo $_GET['deux']; ?>"/>
-		<input type=text name="deux_t" placeholder='description' value="<?php echo $_GET['deux_t']; ?>"/><br/>
+		<input type=date name="deux" placeholder=date required value="$_GET[deux]"/>
+		<input type=text name="deux_t" placeholder=description value="$_GET[deux_t]"/><br/>
 		
-		<input type=date name="trois" placeholder='date' required value="<?php echo $_GET['trois']; ?>"/>
-		<input type=text name="trois_t" placeholder='description' value="<?php echo $_GET['trois_t']; ?>"/><br/>
+		<input type=date name="trois" placeholder=date required value="$_GET[trois]"/>
+		<input type=text name="trois_t" placeholder=description value="$_GET[trois_t]"/><br/>
+                     '; } else{ ?>
+                
+                <input type=date name="un" placeholder='date' required value=""/>
+		<input type=text name="un_t" placeholder='description'value=""/><br/>
 		
+		<input type=date name="deux" placeholder='date' required value=""/>
+		<input type=text name="deux_t" placeholder='description' value=""/><br/>
+		
+		<input type=date name="trois" placeholder='date' required value=""/>
+		<input type=text name="trois_t" placeholder='description' value=""/><br/>
+                <?php } ?>
+                
 		<input type=submit value="envoyer la purée">
 		<input type=hidden name="friseform" value="yay" />
 		</form>
