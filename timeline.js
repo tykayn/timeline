@@ -1,7 +1,4 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 jQuery(document).ready(function($){
   
     boxes = $('.timelinebloc:not(.marqueur)');
@@ -73,7 +70,7 @@ jQuery(document).ready(function($){
         
         int++;
         $(this).css('margin-top', int*line_height ).css('border','solid 0px');
-        $('.timeline-tk').css('height',int*line_height +150 );
+        $('.timeline-tk').css('height',int*line_height +550 );
      console.log(int);
     }
     //si superposé, bouger la div de une ligne de haut
