@@ -1,8 +1,8 @@
 <?php
 
-namespace Tykayn\PortfolioBundle\Nav\classes;
+//namespace Tykayn\PortfolioBundle\Nav\classes;
 
-class TL {
+class Timeline {
 
     private $debug = FALSE;
     private $lineHeight = 150;
@@ -10,13 +10,16 @@ class TL {
     private $customClass = "myCustomClass";
 
     /**
-     * set a custom class to the event blocks
+     * sets a custom class to the event blocks
      * @param string $blah
      */
     public function setCustomClass(string $blah) {
-        $this->lineHeight = $blah;
+        $this->customClass = $blah;
     }
-
+    /**
+     * sets the height of a line in a timeline
+     * @param int $int
+     */
     public function setLineHeight(int $int) {
         $this->lineHeight = $int;
     }
@@ -258,7 +261,7 @@ class TL {
         //  $debug .=" left: $px_left , taille frise: $GLOBALS[taille_frise] , taille bloc: $taille_bloc ";
         //echo " <br/>left: $px_left , taille frise: $GLOBALS[taille_frise] , taille bloc: $taille_bloc ";
         if ($px_left > ($GLOBALS['taille_frise'] - $taille_bloc)) {
-            $classe .= "ending";
+            $classe .= " ending ";
         }
 
         return ' 

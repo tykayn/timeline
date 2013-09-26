@@ -16,7 +16,8 @@
    // error_reporting(E_ALL);
     date_default_timezone_set('Europe/Paris');
     require('sidefunction.php');
-    
+        require('function.timeline.php');
+    $tl = new Timeline();
     ?>
 		<div class="top">
 		<img src="icon.png" alt="icone"/>
@@ -49,15 +50,15 @@
 	<br/>		);
 	<br/>		
 	<br/>	timeline = new timeline();
-	<br/>	echo timeline::frise($tableau, "asc",940);
-	<br/>	echo timeline::css();
+	<br/>	echo $tl->frise($tableau, "asc",940);
+	<br/>	echo $tl->css();
 			
 		</code>
 		n'oubliez pas de faire les echo() <br/>
 		Ce qui donne ceci:
 		
 		<?php
-	include('function.timeline.php');
+	//include('function.timeline.php');
 	$tableau = array(
 		"01/01/2007,30/12/2007" => "2007",
 		date('Y-m-d') => "today ",
@@ -99,10 +100,12 @@
 		
 		7 milliards d'humains"
 			);
+                     //   $tl = new TL();
+                        
 			echo 
-			timeline::frise($tableau, "asc").
-			timeline::css().
-			'Ou encore comme ceci:'. timeline::frise($tableau, "asc");
+			$tl->frise($tableau, "asc").
+			$tl->css().
+			'Ou encore comme ceci:'. $tl->frise($tableau, "asc");
 			
 			?>
 		<h2 id="tableau">Le tableau d'évènements</h2>
@@ -132,36 +135,39 @@
 		<h3> Exemples</h3>
 		
 		
-		<?php echo 'Aujourd\'hui : '.timeline::datejour(date('Y-m-d')); ?>.<br/>
-		<code>echo 'Aujourd\'hui : '.timeline::datejour(date('Y-m-d'));</code><br/>
-		
-		<?php echo 'Le jour de ma naissance était un '.timeline::datejour('1987-09-16'); ?>.<br/>
-		<code>echo 'Le jour de ma naissance était un '.timeline::datejour('1987-09-16');</code><br/>
-		
+		Jour de la semaine d'une date:
+		<fieldset>
+		<code>echo 'Aujourd\'hui : '.$tl->datejour(date('Y-m-d'));</code><br/>
+		<?php echo 'Aujourd\'hui : '.$tl->datejour(date('Y-m-d')); ?>.<br/>
+		</fieldset>
+		<fieldset>
+		<code>echo 'Le jour de ma naissance était un '.$tl->datejour('1987-09-16');</code><br/>
+		<?php echo 'Le jour de ma naissance était un '.$tl->datejour('1987-09-16'); ?>.<br/>
+		</fieldset>
 		
 		<?php echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .
-		timeline::ecart('2009-08-15').
-		' et c\'était un '.timeline::datejour('2009-08-15');
+		$tl->ecart('2009-08-15').
+		' et c\'était un '.$tl->datejour('2009-08-15');
 		?><br/>
-		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> timeline::ecart('2009-08-15').<br/>' et c\'était un '.<br/>timeline::datejour('2009-08-15');</code><br/><br/>
+		<code>echo 'Ce portfolio a été créé le 15/08/2009, c\'est à dire ' .<br/> $tl->ecart('2009-08-15').<br/>' et c\'était un '.<br/>$tl->datejour('2009-08-15');</code><br/><br/>
 		
 		Et voici une frise pour visualiser ces données:
 		<?php
 	$tableau2 = array(
-		"16/09/1987" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/>",
-		"15/08/2009,".date('Y-m-d') => "vie du portfolio",
+		"1987-09-16" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/>",
+		"2009-08-15,".date('Y-m-d') => "vie du portfolio",
 		date('Y-m-d') => "aujourd'hui"
 			);
-	echo timeline::frise($tableau2, "asc",600);
+	echo $tl->frise($tableau2, "asc",600);
 	?>
 	Ce qui a été fait comme ceci:
 		<code>
 	$tableau2 = array(<br/>
-		"16/09/1987" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/> ",<br/>
-		"15/08/2009,".date('d/m/Y') => "vie du portfolio",<br/>
+		"1987-09-16" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/> ",<br/>
+		"2009-08-15,".date('d/m/Y') => "vie du portfolio",<br/>
 		date('d/m/Y') => "aujourd'hui"<br/>
 			);<br/>
-	echo timeline::frise($tableau2, "asc",600);
+	echo $tl->frise($tableau2, "asc",600);
 	</code>
 		<br/>
 		Et voilà, bonnes frises à vous.<br/>
