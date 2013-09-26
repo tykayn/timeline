@@ -408,24 +408,16 @@ class Timeline {
        //gestion des formats différents de date
 
         if (preg_match("/^-?\d*,-?\d*$/", $k)) { // gestion de l'année si on entre un nombre sans - ou /
-            
                 $ans = explode(",", $k);
-                
                 $k =  $ans[0].'-01-01,'.$ans[1].'-12-31';
-              
-                //$k = $k . '-01-01';
         }
         elseif(preg_match("/^-?\d*$/", $k)){
-          echo '<hr/>'.$k . ' .' ;
           $k = $k.'-01-01,'.$k.'-12-31';
-          echo '<br/>'.$k . ' .' ;      
         }
         // conversion de dates jj/mm/AAAA*
         elseif(preg_match("/^\d{2}\/\d{2}\/-?\d*$/", $k)){
             $k = $k.'-01-01,'.$k.'-12-31';
         }
-        
-            // $ajout = 0;
             $boom = explode("-", $k);
 
             if (strstr($k, ',')) {
