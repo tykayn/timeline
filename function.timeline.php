@@ -176,9 +176,10 @@ class Timeline {
             '11' => '30',
             '12' => '31',
         );
-        //gestion des formats différents de date
-
-        if (preg_match("/^(\d{4}-\d{2}-\d{2})|((\d{2}|\d{1})\/\d{2}\/\d{4})$/", $string_date)) { //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
+        
+ 
+        
+        if (preg_match("/^(-?\d{4}-\d{2}-\d{2})|((\d{2}|\d{1})\/\d{2}\/\d{4})$/", $string_date)) { //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
             $boom = explode('-', $string_date); // YYYY-MM-JJ
             if (strpos($string_date, '/') !== false) {  // TODO prendre en compte la syntaxe yyyy/mm/jj
                 $boom = explode('/', $string_date); // JJ/MM/YYYY
@@ -210,11 +211,17 @@ class Timeline {
             }
             $ajout += $delta_annees;
             //     echo '<br/> ----- ajout: ' . $ajout;
-            return $ajout;
-        } elseif (is_int($string_date)) { // gestion de l'année si on entre un nombre sans - ou /
+            
+        }
+        elseif (preg_match("/^\d$/", $string_date)) { // gestion de l'année si on entre un nombre sans - ou /
+            
+                
+                $ajout += $string_date * 365;
+                //$string_date = $string_date . '-01-01';
         } else {
             var_dump($string_date);
         }
+        return $ajout;
     }
 
     /**
@@ -398,15 +405,35 @@ class Timeline {
 
         $tab_jours = Array();
         foreach ($array as $k => $v) {
+       //gestion des formats différents de date
+
+        if (preg_match("/^-?\d*,-?\d*$/", $k)) { // gestion de l'année si on entre un nombre sans - ou /
+            
+                $ans = explode(",", $k);
+                
+                $k =  $ans[0].'-01-01,'.$ans[1].'-12-31';
+              
+                //$k = $k . '-01-01';
+        }
+        elseif(preg_match("/^-?\d*$/", $k)){
+          echo '<hr/>'.$k . ' .' ;
+          $k = $k.'-01-01,'.$k.'-12-31';
+          echo '<br/>'.$k . ' .' ;      
+        }
+        // conversion de dates jj/mm/AAAA*
+        elseif(preg_match("/^\d{2}\/\d{2}\/-?\d*$/", $k)){
+            $k = $k.'-01-01,'.$k.'-12-31';
+        }
+        
             // $ajout = 0;
             $boom = explode("-", $k);
 
             if (strstr($k, ',')) {
                 $dates_duree = explode(",", $k);
-                //        $debug .= '<br/><pre>'.print_r($dates_duree , true).'  '.$dates_duree[1].' </pre>';
+                  $debug .= '<br/><pre>'.print_r($dates_duree , true).'  '.$dates_duree[1].' </pre>';
                 //TODO : jours depuis début pour les durées
+                  //TODO différencier les évènements commençant a la même date
                 $conversions[$this->convert($dates_duree[0])]['content'] = $v;
-                //    $conversions[ $this->convert($dates_duree[0])]['end'] =  $this->convert($dates_duree[1]) ;
                 $conversions[$this->convert($dates_duree[0])]['end'] = $dates_duree[1];
                 $conversions[$this->convert($dates_duree[0])]['date'] = $k;
                 $conversions[$this->convert($dates_duree[0])]['start'] = $dates_duree[0];

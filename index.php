@@ -155,7 +155,10 @@
 		<?php
 	$tableau2 = array(
 		"1987-09-16" => "ma naissance <img src='http://lh6.ggpht.com/_tvmQfLNuqJc/TLQ7H69-5EI/AAAAAAAANrQ/iFSGpVxwyHA/tykayn.jpg' alt='avatar'/>",
+		"1987-09-16,".date('Y-m-d') => "it's mah life",
 		"2009-08-15,".date('Y-m-d') => "vie du portfolio",
+		"2008" => "a",
+		"2007,2008" => "b",
 		date('Y-m-d') => "aujourd'hui"
 			);
 	echo $tl->frise($tableau2, "asc",600);
@@ -207,7 +210,7 @@
 		<a href="function_timeline.zip"><img alt="télécharger l'application random picture" src="http://artlemoine.com/decoration/dl.png"/>Télécharger la classe php</a><br/>
 		<br/>
 		<div class="foot">
-		<?php include('../list.php'); ?>
+		
 		<a href="http://artlemoine.com"><img alt="favicon " src="http://artlemoine.com/decoration/templates/flowhtml5/favicon.png"/> Portfolio de Baptiste Lemoine<br/>http://artlemoine.com </a>
 		</div>
 </div>
