@@ -508,7 +508,7 @@ a:hover{
     min-width:400px !important;
 }
 .periode .timeline_period_line{
-    display: inline-block;
+    display: block;
     height:5px;
     min-width:1px;
     background: blue;
@@ -533,4 +533,9 @@ a:hover{
 }
 .ending:hover{
     transform: translate(-150px, 0px);
+}
+.testing{
+    background: #000;
+    border: solid 3px red;
+    color: yellow;
 }
