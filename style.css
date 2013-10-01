@@ -14,6 +14,8 @@ body{
     background: #ccc;
     text-align: center;
     overflow: auto;
+    min-width:300px;
+    margin: 10px auto;
 }
 .timeline-tk{
     text-align: left;
@@ -30,10 +32,6 @@ body{
     min-width: 500px;
     margin: 0 auto;
 }
-
-
-
-
 
 
 
@@ -213,7 +211,6 @@ padding:1px 10px;
 .marqueurs{
 display:block;
 height:10px;
-
 }
 a{
 text-decoration: none;
@@ -431,8 +428,8 @@ a:hover{
     box-shadow: 0 0 10px #ccc;
     transition: all ease 0.5s;
     height: 150px;
-   overflow: hidden;
-    /*width: 2px;*/
+   /*overflow: hidden;*/
+    width: 200px;
     z-index: 1;
 }
 
@@ -470,11 +467,11 @@ a:hover{
 }
 .timeline_content{
     padding: 5px 10px;
+    height: 100%;
 }
 .timeline_head , .timeline_content{
         opacity: 0.8;
         transition: all ease 0.5s;
-        overflow: hidden;
         width: 100%;
         min-width:300px;
 }.peak{
@@ -534,8 +531,33 @@ a:hover{
 .ending:hover{
     transform: translate(-150px, 0px);
 }
-.testing{
-    background: #000;
-    border: solid 3px red;
-    color: yellow;
+
+.timelinebloc{
+    min-height: 150px;
+    overflow: hidden;
+    min-width: 100px;
+}
+.timelinebloc.marqueur{
+    min-width: 1px;
+}
+.timelinebloc:hover{
+    min-height: 800px;
+    overflow: hidden;
+    min-width: 400px;
+    z-index: 300;
+}
+
+.peak{
+    content: 'OH';
+    background: transparent;
+    border-bottom: 15px solid #222222;
+    border-right: 15px solid transparent;
+    display: block;
+    height: 0px;
+    position:relative;
+    width: 0px;
+    top:-15px;
+    left:0;
+    overflow: hidden;
+    z-index: 100;
 }
