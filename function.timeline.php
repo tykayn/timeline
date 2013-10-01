@@ -273,7 +273,7 @@ class Timeline {
 
         return ' 
         
-        <div class="timelinebloc box-frise ' . $classe . ' ' . $customclass . '" style=" left: ' . $px_left . 'px; position : absolute;' . $end . '" data-nb="' . $number . '" data-jours="' . $diff_j . '" >
+        <div class="timelinebloc box-frise ' . $classe . ' ' . $customclass . '" style=" left: ' . $px_left . 'px; position : absolute;' . $end . '" data-nb="' . $number . '" data-jours="' . $diff_j . '" data-line="0" >
                 <div class="peak" style=" left: ' . $px_left . 'px; position : absolute;" style=" left: ' . $px_left . 'px; position : absolute;' . $end . '" data-nb="' . $number . '"></div>
                  <div class="timeline_period_line" style="' . $end . '">
                  </div>
@@ -374,24 +374,14 @@ class Timeline {
                 die("<div class='info'> $k est un mauvais format de date. Veuillez entrer des dates tel que JJ/MM/AAAA ou bien JJ/MM/AAAA,JJ/MM/AAAA pour les durées</div>");
             }
             $debug .= "<br/>$k stamp $stamp <br/>";
-//	if(!isset($tabstamps[$stamp])){$tabstamps[$stamp] ='';}
             $tabstamps[$stamp] = $v;
             $tabstampsk[] = $stamp;
-
-//	echo "<br/>$k $stamp ,";
-//	print_r($tabstampsk);
         }  //fin de l'examen du tableau
         // définir l'écart de date maximum
         //  si une seule année : 365 j
 
         $largeur = 365; // minimum en jour pour la largeur , 365 jours
         $date_min = min($t_dates);
-//        if( strpos($date_min , '/') )
-//        {
-//            $debug .=" date min : $date_min";
-//            $boom = explode( '/' , $date_min);
-//            $date_min = $boom[2];
-//        }
         $annees = ( max($t_dates) - $date_min ) + 5;
         $largeur = $annees * $largeur; // jours
         $conversions = array();
