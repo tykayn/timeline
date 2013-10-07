@@ -13,15 +13,24 @@ class Timeline {
      * sets a custom class to the event blocks
      * @param string $blah
      */
-    public function setCustomClass(string $blah) {
+    public function setCustomClass($blah) {
         $this->customClass = $blah;
     }
+
     /**
      * sets the height of a line in a timeline
      * @param int $int
      */
-    public function setLineHeight(int $int) {
+    public function setLineHeight($int) {
         $this->lineHeight = $int;
+    }
+
+    /**
+     * sets the bonus days on the right side in a timeline to see better the events
+     * @param int $int
+     */
+    public function setBonusWidth($int) {
+        $this->bonusWidth = $int;
     }
 
     public function _construct() {
@@ -176,9 +185,21 @@ class Timeline {
             '11' => '30',
             '12' => '31',
         );
-        
- 
-        
+
+        //gestion des formats différents de date
+        //conversion de NOW en date.
+        $string_date = str_replace("NOW", date('Y-m-d'), $string_date);
+        if (preg_match("/^-?\d*,-?\d*$/", $string_date)) { // gestion de l'année si on entre un nombre sans - ou /
+            $ans = explode(",", $string_date);
+            $string_date = $ans[0] . '-01-01,' . $ans[1] . '-12-31';
+        } elseif (preg_match("/^-?\d*$/", $string_date)) {
+            $string_date = $string_date . '-01-01,' . $string_date . '-12-31';
+        }
+        // conversion de dates jj/mm/AAAA*
+        elseif (preg_match("/^\d{2}\/\d{2}\/-?\d*$/", $string_date)) {
+            $string_date = $string_date . '-01-01,' . $string_date . '-12-31';
+        }
+
         if (preg_match("/^(-?\d{4}-\d{2}-\d{2})|((\d{2}|\d{1})\/\d{2}\/\d{4})$/", $string_date)) { //   "/^\d{4}-\d{2}-\d{2}(,\d{4}-\d{2}-\d{2})?$/"
             $boom = explode('-', $string_date); // YYYY-MM-JJ
             if (strpos($string_date, '/') !== false) {  // TODO prendre en compte la syntaxe yyyy/mm/jj
@@ -211,13 +232,9 @@ class Timeline {
             }
             $ajout += $delta_annees;
             //     echo '<br/> ----- ajout: ' . $ajout;
-            
-        }
-        elseif (preg_match("/^\d$/", $string_date)) { // gestion de l'année si on entre un nombre sans - ou /
-            
-                
-                $ajout += $string_date * 365;
-                //$string_date = $string_date . '-01-01';
+        } elseif (preg_match("/^\d$/", $string_date)) { // gestion de l'année si on entre un nombre sans - ou /
+            $ajout += $string_date * 365;
+            //$string_date = $string_date . '-01-01';
         } else {
             var_dump($string_date);
         }
@@ -323,8 +340,24 @@ class Timeline {
             $fin_negatif = 0;
             $stamp = '';
             $stamp_fin = '';
+            //gestion des formats différents de date
+            $k = str_replace("NOW", date('Y-m-d'), $k);
 
-            if (preg_match("/^\d{4}$/", $k)) {
+            if (preg_match("/^-?\d*,-?\d*$/", $k)) { // gestion de période de l'année si on entre un nombre sans - ou /
+                $ans = explode(",", $k);
+                $k = $ans[0] . '-01-01,' . $ans[1] . '-12-31';
+            } elseif (preg_match("/^-?\d*$/", $k)) {
+                $k = $k . '-01-01,' . $k . '-12-31';
+            }
+            // conversion de dates jj/mm/AAAA*
+            elseif (preg_match("/^\d{2}\/\d{2}\/-?\d*$/", $k)) {
+                $k = $k . '-01-01,' . $k . '-12-31';
+            }
+
+
+            
+
+            if (preg_match("/^\d*$/", $k)) {
                 $k = $k . '-01-01';
             }
 
@@ -395,30 +428,32 @@ class Timeline {
 
         $tab_jours = Array();
         foreach ($array as $k => $v) {
-       //gestion des formats différents de date
-
-        if (preg_match("/^-?\d*,-?\d*$/", $k)) { // gestion de l'année si on entre un nombre sans - ou /
+            //gestion des formats différents de date
+            //conversion de NOW en date.
+            $k = str_replace("NOW", date('Y-m-d'), $k);
+            if (preg_match("/^-?\d*,-?\d*$/", $k)) { // gestion de l'année si on entre un nombre sans - ou /
                 $ans = explode(",", $k);
-                $k =  $ans[0].'-01-01,'.$ans[1].'-12-31';
-        }
-        elseif(preg_match("/^-?\d*$/", $k)){
-          $k = $k.'-01-01,'.$k.'-12-31';
-        }
-        // conversion de dates jj/mm/AAAA*
-        elseif(preg_match("/^\d{2}\/\d{2}\/-?\d*$/", $k)){
-            $k = $k.'-01-01,'.$k.'-12-31';
-        }
+                $k = $ans[0] . '-01-01,' . $ans[1] . '-12-31';
+            } elseif (preg_match("/^-?\d*$/", $k)) {
+                $k = $k . '-01-01,' . $k . '-12-31';
+            }
+            // conversion de dates jj/mm/AAAA*
+            elseif (preg_match("/^\d{2}\/\d{2}\/-?\d*$/", $k)) {
+                $k = $k . '-01-01,' . $k . '-12-31';
+            }
             $boom = explode("-", $k);
 
             if (strstr($k, ',')) {
                 $dates_duree = explode(",", $k);
-                  $debug .= '<br/><pre>'.print_r($dates_duree , true).'  '.$dates_duree[1].' </pre>';
+                $debug .= '<br/><pre>' . print_r($dates_duree, true) . '  ' . $dates_duree[1] . ' </pre>';
                 //TODO : jours depuis début pour les durées
-                  //TODO différencier les évènements commençant a la même date
-                $conversions[$this->convert($dates_duree[0])]['content'] = $v;
-                $conversions[$this->convert($dates_duree[0])]['end'] = $dates_duree[1];
-                $conversions[$this->convert($dates_duree[0])]['date'] = $k;
-                $conversions[$this->convert($dates_duree[0])]['start'] = $dates_duree[0];
+                //TODO différencier les évènements commençant a la même date
+                $cle = $this->convert($dates_duree[0]);
+                //  echo"<br/> clé : ".$cle;
+                $conversions[$cle]['content'] = $v;
+                $conversions[$cle]['end'] = $dates_duree[1];
+                $conversions[$cle]['date'] = $k;
+                $conversions[$cle]['start'] = $dates_duree[0];
             } else {
                 $conversions[$this->convert($k)]['content'] = $v; // clé[jours_depuis_debut]
                 $tab_jours[] = $this->convert($k);

@@ -230,6 +230,17 @@ max-width: 1000px;
 background:orange !important;
 }
 
+.main:before{
+	width: 0;
+	height: 0;
+	border-bottom: 100px solid red;
+	border-right: 100px solid transparent;
+        display: block;
+        background: green;
+/*        position: relative;
+        top:0;
+            left:2px;*/
+}
 .box-frise{
 	background: #fff;
 	padding:5px 0;
@@ -487,11 +498,7 @@ a:hover{
    z-index: 110;
 }
 .periode{
-    border-top:5px solid;
-    border-bottom:5px solid;
     background: rgb(150, 153, 255);
-   /* height:15px;
-    overflow: hidden;*/
     border-left: none;
     margin-top:20px;
     min-width: 300px;
@@ -499,8 +506,6 @@ a:hover{
 
 .periode:hover{
     background: rgba(200, 203, 255,1);
-    border-top:5px solid;
-    border-bottom:5px solid;
     min-height:150px;
     min-width:400px !important;
 }
