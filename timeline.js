@@ -133,7 +133,6 @@ jQuery(document).ready(function($) {
             if (parseInt($(this).data('line')) > max) {
                 max = parseInt($(this).data('line'));
                 // console.log(max + '  max');
-                
             }
         })
         max += 1; // rajout de une hauteur pour une lecture plus facile
